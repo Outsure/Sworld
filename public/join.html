@@ -173,7 +173,10 @@
         <input type="file" name="photo" accept="image/*" />
       </label>
 
-      <button type="submit">Join Sworld Wall</button>
+      <button type="submit" id="submitBtn">
+  <span id="submitText">Join Sworld Wall</span>
+  <span id="submitLoader" class="loader"></span>
+</button>
     </form>
 
     <div class="ok" id="okBox">Submitted successfully. Your profile is ready for the screen ✨</div>
@@ -181,28 +184,43 @@
     <div class="note">Tip: Open <b>/sworld/display</b> on the big screen and let guests scan the QR shown there.</div>
   </div>
 
-  <script>
-    const form = document.getElementById('joinForm');
-    const okBox = document.getElementById('okBox');
-    const errBox = document.getElementById('errBox');
+<script>
+  const form = document.getElementById('joinForm');
+  const okBox = document.getElementById('okBox');
+  const errBox = document.getElementById('errBox');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      okBox.style.display = 'none';
-      errBox.style.display = 'none';
+  const submitBtn = document.getElementById('submitBtn');
+  const submitText = document.getElementById('submitText');
+  const submitLoader = document.getElementById('submitLoader');
 
-      const formData = new FormData(form);
-      try {
-        const res = await fetch('/api/entries', { method: 'POST', body: formData });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Submit failed');
-        okBox.style.display = 'block';
-        form.reset();
-      } catch (error) {
-        errBox.textContent = error.message;
-        errBox.style.display = 'block';
-      }
-    });
-  </script>
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    okBox.style.display = 'none';
+    errBox.style.display = 'none';
+
+    submitBtn.disabled = true;
+    submitText.textContent = 'Submitting...';
+    submitLoader.classList.add('show');
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch('/api/entries', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Submit failed');
+
+      okBox.style.display = 'block';
+      form.reset();
+    } catch (error) {
+      errBox.textContent = error.message;
+      errBox.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitText.textContent = 'Join Sworld Wall';
+      submitLoader.classList.remove('show');
+    }
+  });
+</script>
 </body>
 </html>
