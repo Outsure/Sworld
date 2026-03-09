@@ -70,39 +70,58 @@ body::before {
       background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 24%);
       pointer-events: none;
     }
-    .header-note {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--sub);
-      font-size: 18px;
+.header-note {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--sub);
+  font-size: 22px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 16px;
+}
+    .header-note img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
     }
-    .header-note img { width: 34px; height: 34px; object-fit: contain; }
     .title {
       font-family: 'Playfair Display', serif;
       font-size: 42px;
       line-height: 1.05;
       margin: 12px 0 12px;
     }
-    .name {
-      font-size: clamp(52px, 5vw, 72px);
-      font-weight: 800;
-      margin: 16px 0 8px;
-      word-break: break-word;
-    }
+.name {
+  font-size: clamp(60px, 5.5vw, 82px);
+  font-weight: 800;
+  margin: 18px 0 10px;
+  word-break: break-word;
+}
     .ig {
       font-size: 28px;
       color: var(--accent);
       margin-bottom: 18px;
     }
-    .msg {
-      font-size: 20px;
-      color: var(--sub);
-      margin-top: 16px;
-      line-height: 1.6;
-      min-height: 80px;
-    }
-    .rotation {
+.msg {
+  font-size: 34px;
+  color: var(--sub);
+  margin-top: 20px;
+  line-height: 1.35;
+  min-height: 140px;
+  font-weight: 600;
+}
+.qr-header {
+  justify-content: center;
+  font-size: 22px;
+}
+.qr-header img {
+  width: 56px;
+  height: 56px;
+}
+.rotation {
       margin-top: 22px;
       display: inline-flex;
       gap: 8px;
@@ -182,10 +201,10 @@ body::before {
 
     <section class="panel">
       <div class="qr-box">
-        <div class="header-note" style="justify-content:center; font-size:16px;">
-          <img src="/sworld-logo.png" alt="Sworld logo" style="width:28px;height:28px;" />
-          <span>Add your profile</span>
-        </div>
+    <div class="header-note qr-header">
+      <img src="/sworld-logo.png" alt="Sworld logo" />
+      <span>Add your profile</span>
+    </div>
         <div>
           <h2 class="title" style="font-size:42px; margin:8px 0 6px;">Scan & Join</h2>
           <div class="small">QR opens the guest input page directly</div>
