@@ -192,7 +192,6 @@ body::before {
       <div class="name" id="name">Waiting...</div>
       <div class="ig" id="ig">@yourguest</div>
       <div class="msg" id="message">Guests can submit from the QR code and appear here automatically.</div>
-      <div class="rotation">Auto rotation every 15 seconds</div>
       <div class="counter" id="counter">0 profiles</div>
     </section>
 
@@ -200,20 +199,25 @@ body::before {
       <img class="photo" id="photo" src="/default-avatar.png" alt="Guest photo" />
     </section>
 
-    <section class="panel">
-      <div class="qr-box">
-    <div class="header-note qr-header">
-      <img src="/sworld-logo.png" alt="Sworld logo" />
-      <span>Add your profile</span>
+<section class="panel">
+
+  <div class="header-note qr-header">
+    <img src="/sworld-logo.png" alt="Sworld logo" />
+    <span>Add your profile</span>
+  </div>
+
+  <div class="qr-box">
+    <div>
+      <h2 class="title" style="font-size:42px; margin:8px 0 6px;">Scan & Join</h2>
+      <div class="small">QR opens the guest input page directly</div>
     </div>
-        <div>
-          <h2 class="title" style="font-size:42px; margin:8px 0 6px;">Scan & Join</h2>
-          <div class="small">QR opens the guest input page directly</div>
-        </div>
-        <img class="qr" id="qr" alt="QR code" />
-        <div class="small" id="joinUrl">Loading QR...</div>
-      </div>
-    </section>
+
+    <img class="qr" id="qr" alt="QR code" />
+    <div class="small" id="joinUrl">Loading QR...</div>
+
+  </div>
+
+</section>
   </div>
 
   <script>
