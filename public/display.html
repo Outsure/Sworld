@@ -8,42 +8,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --text: #f8fbff;
-      --sub: #c7d7ff;
-      --accent: #cfe0ff;
-      --accent-2: #8fb0ff;
-      --panel: rgba(5, 16, 36, 0.72);
-      --line: rgba(164, 193, 255, 0.16);
-    }
+:root {
+  --text: #ffffff;
+  --sub: rgba(255,255,255,0.85);
+  --accent: #ffffff;
+  --accent-2: #dbe8ff;
+  --panel: rgba(255,255,255,0.10);
+  --line: rgba(255,255,255,0.25);
+}
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Inter, sans-serif;
-      color: var(--text);
-      background:
-        linear-gradient(rgba(3, 8, 18, 0.62), rgba(3, 8, 18, 0.82)),
-        url('/sworld-stage.jpg') center/cover no-repeat fixed;
-      overflow: hidden;
-      position: relative;
-    }
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(2px 2px at 8% 18%, rgba(255,255,255,0.9), transparent 55%),
-        radial-gradient(2px 2px at 16% 8%, rgba(255,255,255,0.75), transparent 55%),
-        radial-gradient(1.5px 1.5px at 22% 32%, rgba(255,255,255,0.8), transparent 55%),
-        radial-gradient(2px 2px at 37% 14%, rgba(255,255,255,0.65), transparent 55%),
-        radial-gradient(1.5px 1.5px at 52% 10%, rgba(255,255,255,0.9), transparent 55%),
-        radial-gradient(2px 2px at 70% 16%, rgba(255,255,255,0.72), transparent 55%),
-        radial-gradient(1.5px 1.5px at 78% 30%, rgba(255,255,255,0.8), transparent 55%),
-        radial-gradient(2px 2px at 90% 12%, rgba(255,255,255,0.86), transparent 55%);
-      opacity: .85;
-      pointer-events: none;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, sans-serif;
+  color: var(--text);
+  background:
+    linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)),
+    url('/sworld-stage.jpg') center/cover no-repeat fixed;
+  overflow: hidden;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 8% 18%, rgba(255,255,255,0.55), transparent 55%),
+    radial-gradient(2px 2px at 16% 8%, rgba(255,255,255,0.45), transparent 55%),
+    radial-gradient(1.5px 1.5px at 22% 32%, rgba(255,255,255,0.40), transparent 55%),
+    radial-gradient(2px 2px at 37% 14%, rgba(255,255,255,0.35), transparent 55%),
+    radial-gradient(1.5px 1.5px at 52% 10%, rgba(255,255,255,0.50), transparent 55%),
+    radial-gradient(2px 2px at 70% 16%, rgba(255,255,255,0.38), transparent 55%),
+    radial-gradient(1.5px 1.5px at 78% 30%, rgba(255,255,255,0.42), transparent 55%),
+    radial-gradient(2px 2px at 90% 12%, rgba(255,255,255,0.48), transparent 55%);
+  opacity: 0.35;
+  pointer-events: none;
+}
     .layout {
       position: relative;
       z-index: 1;
