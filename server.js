@@ -10,7 +10,7 @@ const DATA_FILE = path.join(__dirname, 'data.json');
 const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const SWORLD_PREFIX = '/sworld';
-const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
+const BASE_URL = process.env.BASE_URL || 'https://sworld-x3ob.onrender.com';
 
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]', 'utf8');
