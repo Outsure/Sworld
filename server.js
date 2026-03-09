@@ -26,15 +26,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 20 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
     if (file.mimetype.startsWith('image/')) cb(null, true);
     else cb(new Error('Only image uploads are allowed.'));
   }
 });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ limit: '20mb', extended: true }));
 app.use(express.static(PUBLIC_DIR));
 
 function readData() {
@@ -119,6 +119,9 @@ app.get('/display.html', (_req, res) => sendPublicFile(res, 'display.html'));
 app.get('/admin.html', (_req, res) => sendPublicFile(res, 'admin.html'));
 
 app.use((err, _req, res, _next) => {
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ error: 'รูปมีขนาดใหญ่เกินไป กรุณาเลือกรูปไม่เกิน 15MB' });
+  }
   res.status(400).json({ error: err.message || 'Something went wrong.' });
 });
 
