@@ -141,16 +141,16 @@ body::before {
   place-items: center;
   position: relative;
 }
-    .photo {
-      width: min(68vh, 100%);
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      border-radius: 36px;
-      border: 2px solid rgba(255,255,255,0.14);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-      animation: fadeIn .8s ease;
-      background: #14213c;
-    }
+.photo {
+  width: min(68vh, 100%);
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  border-radius: 36px;
+  border: 2px solid rgba(255,255,255,0.14);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  animation: fadeIn .8s ease;
+  background: #14213c;
+}
 .qr-box {
   display: grid;
   gap: 18px;
