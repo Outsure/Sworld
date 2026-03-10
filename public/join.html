@@ -7,15 +7,20 @@
     content="width=device-width, initial-scale=1, viewport-fit=cover"
   />
   <title>Welcome Sworld Wall</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   />
 
   <style>
     :root {
+      --font-th: 'Prompt', sans-serif;
+      --font-en-body: 'Montserrat', sans-serif;
+      --font-en-heading: 'Feeling Passionate', 'Montserrat', sans-serif;
+
       --bg: #002c67;
       --panel: rgba(255,255,255,0.10);
       --line: rgba(255,255,255,0.25);
@@ -28,6 +33,15 @@
       --success-text: #ffffff;
       --danger-bg: rgba(255, 120, 120, 0.14);
       --danger-text: #ffc8c8;
+    }
+
+    @font-face {
+      font-family: 'Feeling Passionate';
+      src: url('/fonts/feeling-passionate.woff2') format('woff2'),
+           url('/fonts/feeling-passionate.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
     }
 
     * {
@@ -44,7 +58,7 @@
     body {
       margin: 0;
       min-height: 100%;
-      font-family: Inter, sans-serif;
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
       color: var(--text);
       background:
         linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
@@ -130,18 +144,21 @@
       letter-spacing: .08em;
       text-transform: uppercase;
       font-size: 12px;
+      font-family: var(--font-en-body);
     }
 
     .brand strong {
       font-size: 22px;
       font-weight: 800;
+      font-family: var(--font-en-body);
     }
 
     h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-en-heading);
       margin: 0 0 8px;
       font-size: clamp(34px, 5vw, 46px);
       line-height: 1.02;
+      font-weight: normal;
     }
 
     p {
@@ -149,6 +166,7 @@
       margin: 0 0 24px;
       font-size: 16px;
       line-height: 1.5;
+      font-family: var(--font-en-body);
     }
 
     .grid {
@@ -160,6 +178,7 @@
       font-size: 14px;
       color: #f6f8ff;
       display: block;
+      font-family: var(--font-en-body);
     }
 
     input,
@@ -175,11 +194,13 @@
       outline: none;
       appearance: none;
       -webkit-appearance: none;
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
     }
 
     input::placeholder,
     textarea::placeholder {
       color: rgba(233, 240, 255, 0.4);
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
     }
 
     input:focus,
@@ -208,6 +229,7 @@
       color: var(--sub);
       font-size: 13px;
       line-height: 1.5;
+      font-family: var(--font-en-body);
     }
 
     .file-meta.show {
@@ -230,6 +252,7 @@
       display: flex;
       justify-content: space-between;
       gap: 12px;
+      font-family: var(--font-en-body);
     }
 
     .progress-bar {
@@ -268,6 +291,7 @@
       min-height: 56px;
       transition: transform .15s ease, opacity .2s ease;
       touch-action: manipulation;
+      font-family: var(--font-en-body);
     }
 
     button:active {
@@ -301,6 +325,7 @@
       border-radius: 14px;
       font-size: 14px;
       line-height: 1.5;
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
     }
 
     .ok {
@@ -318,6 +343,7 @@
       font-size: 13px;
       color: var(--sub);
       line-height: 1.5;
+      font-family: var(--font-en-body);
     }
 
     @keyframes spin {
