@@ -4,40 +4,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin - Sworld Wall</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #060f1d;
-      --panel: rgba(7, 18, 38, 0.82);
-      --line: rgba(164, 193, 255, 0.16);
-      --text: #f7fbff;
-      --sub: #c8d7f4;
-      --accent: #cfe0ff;
-      --accent-2: #8fb0ff;
+      --font-th: 'Prompt', sans-serif;
+      --font-en-body: 'Montserrat', sans-serif;
+      --font-en-heading: 'Feeling Passionate', 'Montserrat', sans-serif;
+
+      --bg: #002c67;
+      --panel: rgba(255,255,255,0.10);
+      --line: rgba(255,255,255,0.20);
+      --text: #ffffff;
+      --sub: rgba(255,255,255,0.82);
+      --accent: #ffffff;
+      --accent-2: #dbe8ff;
+      --danger: #ffc8c8;
+      --danger-bg: rgba(255, 120, 120, 0.14);
     }
-    * { box-sizing: border-box; }
+
+    @font-face {
+      font-family: 'Feeling Passionate';
+      src: url('/fonts/feeling-passionate.woff2') format('woff2'),
+           url('/fonts/feeling-passionate.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+    }
+
     body {
-      font-family: Inter, sans-serif;
       margin: 0;
       min-height: 100vh;
       padding: 28px;
       color: var(--text);
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
       background:
-        linear-gradient(rgba(4,10,20,.8), rgba(4,10,20,.92)),
+        linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
         url('/sworld-stage.jpg') center/cover no-repeat fixed;
+      position: relative;
+      overflow-x: hidden;
     }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background-image:
+        radial-gradient(2px 2px at 10% 18%, rgba(255,255,255,0.70), transparent 55%),
+        radial-gradient(1.5px 1.5px at 22% 10%, rgba(255,255,255,0.55), transparent 55%),
+        radial-gradient(2px 2px at 38% 14%, rgba(255,255,255,0.40), transparent 55%),
+        radial-gradient(1.5px 1.5px at 57% 12%, rgba(255,255,255,0.58), transparent 55%),
+        radial-gradient(2px 2px at 74% 16%, rgba(255,255,255,0.45), transparent 55%),
+        radial-gradient(1.5px 1.5px at 86% 24%, rgba(255,255,255,0.52), transparent 55%);
+      opacity: 0.45;
+    }
+
+    body::after {
+      background: radial-gradient(circle at center, rgba(120,162,255,0.09), transparent 45%);
+    }
+
     .shell {
       max-width: 1400px;
       margin: 0 auto;
-      background: rgba(5, 15, 32, 0.55);
+      background: rgba(255,255,255,0.08);
       border: 1px solid var(--line);
       border-radius: 30px;
       padding: 26px;
       backdrop-filter: blur(14px);
-      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.28);
+      position: relative;
+      z-index: 1;
     }
+
     .topbar {
       display: flex;
       justify-content: space-between;
@@ -46,79 +102,190 @@
       margin-bottom: 22px;
       flex-wrap: wrap;
     }
+
     .brand {
       display: flex;
       align-items: center;
       gap: 14px;
     }
+
     .brand img {
-      width: 52px;
-      height: 52px;
+      width: 72px;
+      height: 72px;
       object-fit: contain;
+      flex-shrink: 0;
     }
+
+    .brand-label {
+      color: var(--sub);
+      font-size: 14px;
+      font-family: var(--font-en-body);
+      margin-bottom: 6px;
+    }
+
     h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 46px;
+      font-family: var(--font-en-heading);
+      font-size: clamp(40px, 5vw, 56px);
       line-height: 1;
-      margin: 0 0 8px;
+      margin: 0;
+      font-weight: normal;
     }
-    .muted { color: var(--sub); }
+
+    .muted {
+      color: var(--sub);
+      font-family: var(--font-en-body);
+    }
+
+    .desc {
+      margin: 12px 0 0;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
     .stats {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      justify-content: flex-end;
     }
+
     .pill {
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.06);
       border: 1px solid var(--line);
       color: var(--sub);
       font-size: 14px;
+      font-family: var(--font-en-body);
     }
+
     .card {
-      display:flex;
-      gap:18px;
-      align-items:center;
-      background: rgba(255,255,255,0.05);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-      margin-bottom:14px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      margin-bottom: 14px;
       box-shadow: 0 10px 30px rgba(0,0,0,.16);
     }
+
     img.preview {
-      width:82px;
-      height:82px;
-      object-fit:cover;
-      border-radius:14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: #10203c;
+      width: 92px;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      flex-shrink: 0;
     }
+
     .meta {
       flex: 1;
       min-width: 0;
     }
-    .name { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-    .tag { color: var(--accent); font-weight: 600; }
-    .message { color: var(--sub); margin-top: 4px; }
-    .hint { font-size: 12px; color: var(--sub); margin-top: 6px; }
-    button {
-      background: linear-gradient(135deg, #dbe7ff, #9fbbff);
-      color: #12203c;
-      border:0;
-      border-radius:12px;
-      padding:10px 16px;
-      cursor:pointer;
-      font-weight:700;
+
+    .name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
+      word-break: break-word;
     }
+
+    .tag {
+      color: var(--accent);
+      font-weight: 600;
+      font-family: var(--font-en-body);
+    }
+
+    .message {
+      color: var(--sub);
+      margin-top: 6px;
+      line-height: 1.55;
+      font-size: 15px;
+      word-break: break-word;
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--sub);
+      margin-top: 8px;
+      font-family: var(--font-en-body);
+    }
+
+    button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #002c67;
+      border: 0;
+      border-radius: 14px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: var(--font-en-body);
+      min-width: 92px;
+      flex-shrink: 0;
+      box-shadow: 0 14px 34px rgba(82, 126, 214, 0.22);
+    }
+
+    button:hover {
+      opacity: 0.95;
+    }
+
     .empty {
-      padding: 24px;
-      border-radius: 18px;
+      padding: 28px;
+      border-radius: 22px;
       border: 1px dashed var(--line);
       color: var(--sub);
       text-align: center;
       background: rgba(255,255,255,0.04);
+      font-family: var(--font-en-body);
+    }
+
+    @media (max-width: 900px) {
+      .topbar {
+        flex-direction: column;
+      }
+
+      .stats {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 14px;
+        background:
+          linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
+          url('/sworld-stage.jpg') center/cover no-repeat;
+      }
+
+      .shell {
+        padding: 18px;
+        border-radius: 24px;
+      }
+
+      .brand img {
+        width: 62px;
+        height: 62px;
+      }
+
+      .card {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      img.preview {
+        width: 100%;
+        max-width: 140px;
+        height: 140px;
+      }
+
+      button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -129,16 +296,17 @@
         <div class="brand">
           <img src="/sworld-logo.png" alt="Sworld logo" />
           <div>
-            <div class="muted">Sworld Admin Portal</div>
+            <div class="brand-label">Sworld Admin Portal</div>
             <h1>Admin Panel</h1>
           </div>
         </div>
-        <p class="muted">Manage guest cards shown on the main screen.</p>
+        <p class="muted desc">Manage guest cards shown on the main screen.</p>
       </div>
+
       <div class="stats">
         <div class="pill" id="countPill">0 profiles</div>
         <div class="pill">Display auto-rotates every 15 seconds</div>
-        <div class="pill">Portal auto-refreshes every 5 seconds</div>
+        <div class="pill">Portal auto-refreshes every 20 seconds</div>
       </div>
     </div>
 
@@ -146,8 +314,17 @@
   </div>
 
   <script>
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     async function load() {
-      const res = await fetch('/api/entries');
+      const res = await fetch('/api/entries', { cache: 'no-store' });
       const items = await res.json();
       const list = document.getElementById('list');
       document.getElementById('countPill').textContent = `${items.length} profiles`;
@@ -159,19 +336,22 @@
 
       list.innerHTML = items.map((item, idx) => `
         <div class="card">
-          <img class="preview" src="${item.photo || '/default-avatar.png'}" alt="${item.name}" />
+          <img class="preview" src="${escapeHtml(item.photo || '/default-avatar.png')}" alt="${escapeHtml(item.name || 'Guest')}" />
           <div class="meta">
-            <div class="name">${item.name} <span class="tag">— @${item.ig}</span></div>
-            <div class="message">${item.message || 'No message added'}</div>
+            <div class="name">
+              ${escapeHtml(item.name || 'Guest')}
+              <span class="tag">— @${escapeHtml(item.ig || 'guest')}</span>
+            </div>
+            <div class="message">${escapeHtml(item.message || 'No message added')}</div>
             <div class="hint">Display order slot: ${idx + 1}</div>
           </div>
-          <button onclick="removeItem('${item.id}')">Delete</button>
+          <button onclick="removeItem('${escapeHtml(item.id)}')">Delete</button>
         </div>
       `).join('');
     }
 
     async function removeItem(id) {
-      await fetch('/api/entries/' + id, { method: 'DELETE' });
+      await fetch('/api/entries/' + encodeURIComponent(id), { method: 'DELETE' });
       load();
     }
 
