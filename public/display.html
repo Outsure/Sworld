@@ -8,42 +8,46 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-:root {
-  --text: #ffffff;
-  --sub: rgba(255,255,255,0.85);
-  --accent: #ffffff;
-  --accent-2: #dbe8ff;
-  --panel: rgba(255,255,255,0.10);
-  --line: rgba(255,255,255,0.25);
-}
+    :root {
+      --text: #ffffff;
+      --sub: rgba(255,255,255,0.85);
+      --accent: #ffffff;
+      --accent-2: #dbe8ff;
+      --panel: rgba(255,255,255,0.10);
+      --line: rgba(255,255,255,0.25);
+    }
+
     * { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Inter, sans-serif;
-  color: var(--text);
-  background:
-    linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)),
-    url('/sworld-stage.jpg') center/cover no-repeat fixed;
-  overflow: hidden;
-  position: relative;
-}
-body::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(2px 2px at 8% 18%, rgba(255,255,255,0.55), transparent 55%),
-    radial-gradient(2px 2px at 16% 8%, rgba(255,255,255,0.45), transparent 55%),
-    radial-gradient(1.5px 1.5px at 22% 32%, rgba(255,255,255,0.40), transparent 55%),
-    radial-gradient(2px 2px at 37% 14%, rgba(255,255,255,0.35), transparent 55%),
-    radial-gradient(1.5px 1.5px at 52% 10%, rgba(255,255,255,0.50), transparent 55%),
-    radial-gradient(2px 2px at 70% 16%, rgba(255,255,255,0.38), transparent 55%),
-    radial-gradient(1.5px 1.5px at 78% 30%, rgba(255,255,255,0.42), transparent 55%),
-    radial-gradient(2px 2px at 90% 12%, rgba(255,255,255,0.48), transparent 55%);
-  opacity: 0.35;
-  pointer-events: none;
-}
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)),
+        url('/sworld-stage.jpg') center/cover no-repeat fixed;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(2px 2px at 8% 18%, rgba(255,255,255,0.55), transparent 55%),
+        radial-gradient(2px 2px at 16% 8%, rgba(255,255,255,0.45), transparent 55%),
+        radial-gradient(1.5px 1.5px at 22% 32%, rgba(255,255,255,0.40), transparent 55%),
+        radial-gradient(2px 2px at 37% 14%, rgba(255,255,255,0.35), transparent 55%),
+        radial-gradient(1.5px 1.5px at 52% 10%, rgba(255,255,255,0.50), transparent 55%),
+        radial-gradient(2px 2px at 70% 16%, rgba(255,255,255,0.38), transparent 55%),
+        radial-gradient(1.5px 1.5px at 78% 30%, rgba(255,255,255,0.42), transparent 55%),
+        radial-gradient(2px 2px at 90% 12%, rgba(255,255,255,0.48), transparent 55%);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
     .layout {
       position: relative;
       z-index: 1;
@@ -53,6 +57,7 @@ body::before {
       gap: 22px;
       padding: 24px;
     }
+
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -63,6 +68,7 @@ body::before {
       overflow: hidden;
       box-shadow: 0 22px 60px rgba(0,0,0,0.28);
     }
+
     .panel::after {
       content: '';
       position: absolute;
@@ -70,104 +76,113 @@ body::before {
       background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 24%);
       pointer-events: none;
     }
-.header-note {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  color: var(--sub);
-  font-size: 22px;
-  font-weight: 600;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  width: fit-content;
-  padding: 10px 14px;
-  border-radius: 16px;
-}
-.header-note img {
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-}
-.title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  line-height: 1.1;
-  margin: 14px 0 10px;
-}
-.name {
-  font-size: clamp(16px, 1.4vw, 20px);
-  font-weight: 700;
-  margin: 20px 0 14px;
-  word-break: break-word;
-}
 
-.ig {
-  font-size: 16px;
-  color: var(--accent);
-  margin-bottom: 24px;
-}
+    .header-note {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--sub);
+      font-size: 22px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 16px;
+    }
 
-.msg {
-  font-size: 18px;
-  color: var(--sub);
-  margin-top: 28px;
-  line-height: 1.45;
-  min-height: 140px;
-  font-weight: 600;
-}
+    .header-note img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+    }
 
-.qr-header {
-  justify-content: flex-start;
-  font-size: 22px;
-  width: 100%;
-}
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      line-height: 1.1;
+      margin: 14px 0 10px;
+    }
 
-.rotation {
-  margin-top: 22px;
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 14px;
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(164, 193, 255, 0.2);
-  color: var(--sub);
-  background: rgba(255,255,255,0.04);
-}
+    .name {
+      font-size: clamp(22px, 2vw, 30px);
+      font-weight: 800;
+      margin: 20px 0 14px;
+      word-break: break-word;
+      transition: opacity .25s ease, transform .25s ease;
+      will-change: opacity, transform;
+    }
 
-.photo-wrap {
-  height: 100%;
-  display: grid;
-  place-items: center;
-  position: relative;
-}
-.photo {
-  width: min(68vh, 100%);
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
-  border-radius: 36px;
-  border: 2px solid rgba(255,255,255,0.14);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-  animation: fadeIn .8s ease;
-  background: #14213c;
-}
-.qr-box {
-  display: grid;
-  gap: 18px;
-  justify-items: center;
-  text-align: center;
-  align-content: center;
-  margin-top: 40px;
-}
-.qr {
-  width: 200px;
-  height: 200px;
-  background: #fff;
-  padding: 12px;
-  border-radius: 20px;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.28);
-}
-    .small { font-size: 14px; color: var(--sub); word-break: break-all; }
+    .ig {
+      font-size: clamp(22px, 1.9vw, 30px);
+      color: var(--accent);
+      margin-bottom: 24px;
+      font-weight: 700;
+      transition: opacity .25s ease, transform .25s ease;
+      will-change: opacity, transform;
+    }
+
+    .msg {
+      font-size: clamp(22px, 1.9vw, 30px);
+      color: var(--sub);
+      margin-top: 28px;
+      line-height: 1.45;
+      min-height: 180px;
+      font-weight: 700;
+      transition: opacity .25s ease, transform .25s ease;
+      will-change: opacity, transform;
+    }
+
+    .qr-header {
+      justify-content: flex-start;
+      font-size: 22px;
+      width: 100%;
+    }
+
+    .photo-wrap {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .photo {
+      width: min(68vh, 100%);
+      max-height: calc(100vh - 96px);
+      aspect-ratio: 3 / 4;
+      object-fit: contain;
+      border-radius: 36px;
+      border: 2px solid rgba(255,255,255,0.14);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      background: #14213c;
+      transition: opacity .3s ease, transform .3s ease;
+      will-change: opacity, transform;
+    }
+
+    .qr-box {
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+      text-align: center;
+      align-content: center;
+      margin-top: 40px;
+    }
+
+    .qr {
+      width: 200px;
+      height: 200px;
+      background: #fff;
+      padding: 12px;
+      border-radius: 20px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+    }
+
+    .small {
+      font-size: 14px;
+      color: var(--sub);
+      word-break: break-all;
+    }
+
     .counter {
       position: absolute;
       bottom: 22px;
@@ -175,10 +190,15 @@ body::before {
       font-size: 14px;
       color: var(--sub);
     }
-    .fade-enter { animation: fadeIn .8s ease; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px) scale(.985); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+
+    .fade-enter {
+      opacity: 0;
+      transform: translateY(8px) scale(.992);
+    }
+
+    .fade-enter-active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   </style>
 </head>
@@ -200,91 +220,190 @@ body::before {
       <img class="photo" id="photo" src="/default-avatar.png" alt="Guest photo" />
     </section>
 
-<section class="panel">
+    <section class="panel">
+      <div class="header-note qr-header">
+        <img src="/sworld-logo.png" alt="Sworld logo" />
+        <span>Add your profile</span>
+      </div>
 
-  <div class="header-note qr-header">
-    <img src="/sworld-logo.png" alt="Sworld logo" />
-    <span>Add your profile</span>
-  </div>
+      <div class="qr-box">
+        <div>
+          <h2 class="title" style="font-size:42px; margin:8px 0 6px;">Join</h2>
+          <div class="small">QR opens the guest input page directly</div>
+        </div>
 
-  <div class="qr-box">
-    <div>
-      <h2 class="title" style="font-size:42px; margin:8px 0 6px;">Join</h2>
-      <div class="small">QR opens the guest input page directly</div>
-    </div>
-
-    <img class="qr" id="qr" alt="QR code" />
-    <div class="small" id="joinUrl">Loading QR...</div>
-
-  </div>
-
-</section>
+        <img class="qr" id="qr" alt="QR code" />
+        <div class="small" id="joinUrl">Loading QR...</div>
+      </div>
+    </section>
   </div>
 
   <script>
+    const DEFAULT_ENTRY = {
+      name: 'Waiting...',
+      ig: 'guest',
+      message: 'Guests can submit from the QR code and appear here automatically.',
+      photo: '/default-avatar.png'
+    };
+
     let entries = [];
     let index = 0;
     let rotateTimer = null;
+    let refreshTimer = null;
+    let isLoadingEntries = false;
+    let lastEntriesSignature = '';
+    let currentPhotoSrc = '';
 
-    async function loadEntries() {
-      const res = await fetch('/api/entries');
-      entries = await res.json();
-      document.getElementById('counter').textContent = `${entries.length} profiles`;
-
-      if (!entries.length) {
-        renderCard({
-          name: 'Waiting...',
-          ig: 'yourguest',
-          message: 'Guests can submit from the QR code and appear here automatically.',
-          photo: '/default-avatar.png'
-        });
-        return;
-      }
-
-      if (index >= entries.length) index = 0;
-      renderCard(entries[index]);
+    function makeSignature(list) {
+      return JSON.stringify(
+        list.map(item => ({
+          id: item.id,
+          ig: item.ig,
+          message: item.message,
+          photo: item.photo,
+          createdAt: item.createdAt
+        }))
+      );
     }
 
-    function renderCard(item) {
+    function safeText(value, fallback = '') {
+      return String(value || fallback);
+    }
+
+    function preloadImage(src) {
+      return new Promise((resolve) => {
+        if (!src) {
+          resolve('/default-avatar.png');
+          return;
+        }
+
+        const img = new Image();
+        img.onload = () => resolve(src);
+        img.onerror = () => resolve('/default-avatar.png');
+        img.src = src;
+      });
+    }
+
+    function animateElements(elements) {
+      elements.forEach(el => {
+        el.classList.remove('fade-enter', 'fade-enter-active');
+        void el.offsetWidth;
+        el.classList.add('fade-enter');
+        requestAnimationFrame(() => {
+          el.classList.add('fade-enter-active');
+        });
+      });
+    }
+
+    async function renderCard(item) {
       const name = document.getElementById('name');
       const ig = document.getElementById('ig');
       const message = document.getElementById('message');
       const photo = document.getElementById('photo');
 
-      [name, ig, message, photo].forEach(el => {
-        el.classList.remove('fade-enter');
-        void el.offsetWidth;
-        el.classList.add('fade-enter');
-      });
+      const nextPhotoSrc = await preloadImage(item.photo || '/default-avatar.png');
 
-      name.textContent = item.name;
-      ig.textContent = '@' + item.ig;
-      message.textContent = item.message || 'Happy to celebrate with the couple tonight ✨';
-      photo.src = item.photo || '/default-avatar.png';
+      name.textContent = safeText(item.name, 'Guest');
+      ig.textContent = '@' + safeText(item.ig, 'guest').replace(/^@/, '');
+      message.textContent = safeText(item.message, 'Happy to celebrate with the couple tonight ✨');
+
+      if (currentPhotoSrc !== nextPhotoSrc) {
+        photo.src = nextPhotoSrc;
+        currentPhotoSrc = nextPhotoSrc;
+      }
+
+      animateElements([name, ig, message, photo]);
+    }
+
+    async function loadEntries(forceRender = false) {
+      if (isLoadingEntries) return;
+      isLoadingEntries = true;
+
+      try {
+        const res = await fetch('/api/entries', { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load entries');
+
+        const data = await res.json();
+        const nextEntries = Array.isArray(data) ? data : [];
+        const signature = makeSignature(nextEntries);
+
+        document.getElementById('counter').textContent = `${nextEntries.length} profiles`;
+
+        if (!nextEntries.length) {
+          entries = [];
+          index = 0;
+          lastEntriesSignature = '';
+          await renderCard(DEFAULT_ENTRY);
+          return;
+        }
+
+        const hasChanged = signature !== lastEntriesSignature;
+        entries = nextEntries;
+        lastEntriesSignature = signature;
+
+        if (index >= entries.length) index = 0;
+
+        if (forceRender || hasChanged) {
+          await renderCard(entries[index]);
+        }
+      } catch (error) {
+        console.error('loadEntries error:', error);
+      } finally {
+        isLoadingEntries = false;
+      }
+    }
+
+    async function rotateNext() {
+      if (!entries.length) return;
+      if (entries.length === 1) {
+        await renderCard(entries[0]);
+        return;
+      }
+
+      index = (index + 1) % entries.length;
+      await renderCard(entries[index]);
     }
 
     async function loadQr() {
-      const res = await fetch('/api/qrcode');
-      const data = await res.json();
-      document.getElementById('qr').src = data.qr;
-      document.getElementById('joinUrl').textContent = data.url;
+      try {
+        const res = await fetch('/api/qrcode', { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load QR');
+
+        const data = await res.json();
+        document.getElementById('qr').src = data.qr;
+        document.getElementById('joinUrl').textContent = data.url;
+      } catch (error) {
+        console.error('loadQr error:', error);
+      }
     }
 
     function startRotation() {
       if (rotateTimer) clearInterval(rotateTimer);
       rotateTimer = setInterval(() => {
-        if (entries.length <= 1) return;
-        index = (index + 1) % entries.length;
-        renderCard(entries[index]);
+        rotateNext();
       }, 15000);
+    }
+
+    function startRefresh() {
+      if (refreshTimer) clearInterval(refreshTimer);
+      refreshTimer = setInterval(() => {
+        loadEntries(false);
+      }, 20000);
     }
 
     async function init() {
       await loadQr();
-      await loadEntries();
+      await loadEntries(true);
       startRotation();
-      setInterval(loadEntries, 20000);
+      startRefresh();
     }
+
+    document.getElementById('photo').addEventListener('error', function () {
+      if (this.src !== `${window.location.origin}/default-avatar.png`) {
+        this.src = '/default-avatar.png';
+        currentPhotoSrc = '/default-avatar.png';
+      }
+    });
 
     init();
   </script>
