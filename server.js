@@ -71,6 +71,13 @@ async function writeData(data) {
   await fsp.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
 }
 
+let dataQueue = Promise.resolve();
+
+function withDataLock(task) {
+  dataQueue = dataQueue.then(task, task);
+  return dataQueue;
+}
+
 function sendPublicFile(res, filename) {
   res.sendFile(path.join(PUBLIC_DIR, filename));
 }
@@ -110,9 +117,12 @@ if (isDuplicateSubmission(duplicateKey)) {
     error: 'duplicate submission'
   });
 }
+const entry = await withDataLock(async () => {
+
   const data = await readData();
+
   const entry = {
-    id: Date.now().toString(),
+    id: `${Date.now()}-${Math.random().toString(36).slice(2,6)}`,
     name: String(name).trim(),
     ig: normalizedIg,
     message: String(message || '').trim(),
@@ -122,17 +132,26 @@ if (isDuplicateSubmission(duplicateKey)) {
   };
 
   data.push(entry);
- await writeData(data);
+  await writeData(data);
+
+  return entry;
+});
+
   res.json({ success: true, entry });
 });
 
 app.delete('/api/entries/:id', async (req, res) => {
-  const data = await readData();
-  const index = data.findIndex(item => item.id === req.params.id);
-  if (index === -1) return res.status(404).json({ error: 'Not found' });
+  const removed = await withDataLock(async () => {
+    const data = await readData();
+    const index = data.findIndex(item => item.id === req.params.id);
+    if (index === -1) return null;
 
-  const [removed] = data.splice(index, 1);
-  await writeData(data);
+    const [removed] = data.splice(index, 1);
+    await writeData(data);
+    return removed;
+  });
+
+  if (!removed) return res.status(404).json({ error: 'Not found' });
 
   if (removed.photo && removed.photo.startsWith('/uploads/')) {
     const photoPath = path.join(PUBLIC_DIR, removed.photo);
