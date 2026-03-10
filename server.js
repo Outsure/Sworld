@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const fsp = fs.promises;
 const path = require('path');
 const multer = require('multer');
 const QRCode = require('qrcode');
@@ -32,21 +33,42 @@ const upload = multer({
     else cb(new Error('Only image uploads are allowed.'));
   }
 });
+const recentSubmissions = new Map();
+const DUPLICATE_WINDOW_MS = 15000;
 
+function isDuplicateSubmission(key) {
+  const now = Date.now();
+  const lastTime = recentSubmissions.get(key);
+
+  if (lastTime && now - lastTime < DUPLICATE_WINDOW_MS) {
+    return true;
+  }
+
+  recentSubmissions.set(key, now);
+
+  for (const [k, t] of recentSubmissions.entries()) {
+    if (now - t > DUPLICATE_WINDOW_MS) {
+      recentSubmissions.delete(k);
+    }
+  }
+
+  return false;
+}
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
 app.use(express.static(PUBLIC_DIR));
 
-function readData() {
+async function readData() {
   try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    const raw = await fsp.readFile(DATA_FILE, 'utf8');
+    return JSON.parse(raw);
   } catch {
     return [];
   }
 }
 
-function writeData(data) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+async function writeData(data) {
+  await fsp.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
 }
 
 function sendPublicFile(res, filename) {
@@ -59,20 +81,36 @@ app.get(`${SWORLD_PREFIX}/join`, (_req, res) => sendPublicFile(res, 'join.html')
 app.get(`${SWORLD_PREFIX}/display`, (_req, res) => sendPublicFile(res, 'display.html'));
 app.get(`${SWORLD_PREFIX}/admin`, (_req, res) => sendPublicFile(res, 'admin.html'));
 
-app.get('/api/entries', (_req, res) => {
-  const data = readData().filter(item => item.approved !== false);
+app.get('/api/entries', async (_req, res) => {
+const data = (await readData()).filter(item => item.approved !== false);
   res.json(data.sort((a, b) => a.createdAt - b.createdAt));
 });
 
-app.post('/api/entries', upload.single('photo'), (req, res) => {
+app.post('/api/entries', upload.single('photo'), async (req, res) => {
   const { name, ig, message } = req.body;
 
   if (!name || !ig) {
     return res.status(400).json({ error: 'Name and IG are required.' });
   }
 
-  const normalizedIg = String(ig).trim().replace(/^@/, '');
-  const data = readData();
+const normalizedIg = String(ig).trim().replace(/^@/, '').toLowerCase();
+  const normalizedName = String(name).trim().toLowerCase();
+const normalizedMessage = String(message || '').trim().toLowerCase();
+const originalFileName = req.file ? String(req.file.originalname || '').toLowerCase() : '';
+
+const duplicateKey = `${normalizedName}__${normalizedIg}__${normalizedMessage}__${originalFileName}`;
+
+if (isDuplicateSubmission(duplicateKey)) {
+  if (req.file) {
+    const uploadedPath = path.join(UPLOAD_DIR, req.file.filename);
+    if (fs.existsSync(uploadedPath)) fs.unlinkSync(uploadedPath);
+  }
+
+  return res.status(409).json({
+    error: 'duplicate submission'
+  });
+}
+  const data = await readData();
   const entry = {
     id: Date.now().toString(),
     name: String(name).trim(),
@@ -84,17 +122,17 @@ app.post('/api/entries', upload.single('photo'), (req, res) => {
   };
 
   data.push(entry);
-  writeData(data);
+ await writeData(data);
   res.json({ success: true, entry });
 });
 
-app.delete('/api/entries/:id', (req, res) => {
-  const data = readData();
+app.delete('/api/entries/:id', async (req, res) => {
+  const data = await readData();
   const index = data.findIndex(item => item.id === req.params.id);
   if (index === -1) return res.status(404).json({ error: 'Not found' });
 
   const [removed] = data.splice(index, 1);
-  writeData(data);
+  await writeData(data);
 
   if (removed.photo && removed.photo.startsWith('/uploads/')) {
     const photoPath = path.join(PUBLIC_DIR, removed.photo);
