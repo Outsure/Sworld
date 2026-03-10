@@ -491,9 +491,60 @@
         transform: rotate(360deg);
       }
     }
+    .milky-way {
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 12;
+  overflow: hidden;
+}
+
+.milky-way::before {
+  content:"";
+  position:absolute;
+  width:180vmax;
+  height:22vmax;
+  left:-130vmax;
+  top:18%;
+  transform:rotate(-18deg);
+  opacity:0;
+
+  background:linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.05) 20%,
+    rgba(219,232,255,0.18) 40%,
+    rgba(255,231,168,0.22) 50%,
+    rgba(219,232,255,0.18) 60%,
+    rgba(255,255,255,0.05) 80%,
+    rgba(255,255,255,0) 100%
+  );
+
+  filter:blur(10px);
+
+  animation:milkySweep 30s ease-in-out infinite;
+}
+
+@keyframes milkySweep {
+
+  0%,80%,100%{
+    transform:translateX(0) rotate(-18deg);
+    opacity:0;
+  }
+
+  85%{
+    opacity:0.25;
+  }
+
+  92%{
+    transform:translateX(120vmax) rotate(-18deg);
+    opacity:0.35;
+  }
+}
   </style>
 </head>
 <body>
+  <div class="milky-way"></div>
   <div class="sparkle-rain-back" aria-hidden="true">
     <span class="sparkle back small d6 b1"></span>
     <span class="sparkle back d5 b2"></span>
