@@ -133,7 +133,6 @@
       height: 22px;
       opacity: 0;
       will-change: transform, opacity, filter;
-
       animation:
         starFall var(--fall-duration) linear infinite,
         starTwinkle var(--twinkle-duration) ease-in-out infinite;
@@ -187,7 +186,6 @@
       opacity: 0.92;
     }
 
-    /* หางดาวอยู่เหนือดาว */
     .sparkle.trail::after {
       content: "";
       position: absolute;
@@ -446,31 +444,9 @@
       resize: vertical;
     }
 
-    .file-input {
-      padding: 12px;
-      min-height: 54px;
-    }
-
-    .file-meta {
-      display: none;
-      margin-top: 10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--sub);
-      font-size: 13px;
-      line-height: 1.5;
-      font-family: var(--font-en-body);
-    }
-
-    .file-meta.show {
-      display: block;
-    }
-
     .progress-wrap {
       display: none;
-      margin-top: 8px;
+      margin-top: 4px;
       gap: 8px;
     }
 
@@ -610,6 +586,147 @@
         0 0 20px rgba(255,211,110,0.8);
     }
 
+    .upload-field {
+      display: grid;
+      gap: 10px;
+    }
+
+    .upload-label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      margin: 0;
+    }
+
+    .upload-card {
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+      backdrop-filter: blur(8px);
+      transition: border-color .25s ease, background .25s ease, transform .25s ease;
+    }
+
+    .upload-card:hover {
+      border-color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.09);
+    }
+
+    .upload-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .upload-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      color: #fff;
+      background: linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+      flex-shrink: 0;
+    }
+
+    .upload-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .upload-title {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .upload-sub {
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
+      margin-top: 4px;
+      word-break: break-word;
+      line-height: 1.45;
+    }
+
+    .upload-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .upload-btn,
+    .remove-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .18s ease, opacity .18s ease, background .18s ease;
+      min-height: 46px;
+    }
+
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      color: #002c67;
+      width: auto;
+      box-shadow: none;
+      margin: 0;
+    }
+
+    .remove-btn {
+      background: rgba(255,255,255,0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.16);
+      width: auto;
+      box-shadow: none;
+      margin: 0;
+    }
+
+    .upload-btn:hover,
+    .remove-btn:hover {
+      transform: translateY(-1px);
+      opacity: .95;
+    }
+
+    .upload-preview {
+      display: none;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.14);
+      margin-top: 2px;
+    }
+
+    .upload-preview.show {
+      display: block;
+    }
+
+    .upload-preview img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 220px;
+      object-fit: contain;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .upload-card.has-file {
+      border-color: rgba(255,255,255,0.32);
+      background: rgba(255,255,255,0.10);
+    }
+
     @keyframes starFall {
       0% {
         transform: translate3d(0, -16vh, 0) scale(.88);
@@ -712,7 +829,6 @@
 
       input,
       textarea,
-      .file-input,
       button {
         font-size: 16px;
       }
@@ -733,199 +849,25 @@
       .sparkle.small::before {
         font-size: 14px;
       }
+
+      .upload-card {
+        padding: 14px;
+      }
+
+      .upload-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .upload-btn,
+      .remove-btn {
+        width: 100%;
+      }
+
+      .upload-preview img {
+        max-height: 180px;
+      }
     }
-    .upload-field {
-  display: grid;
-  gap: 10px;
-}
-
-.upload-label {
-  display: block;
-  font-size: 15px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.92);
-}
-
-.upload-card {
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.06);
-  border-radius: 18px;
-  padding: 16px;
-  display: grid;
-  gap: 14px;
-  backdrop-filter: blur(8px);
-  transition: border-color .25s ease, background .25s ease, transform .25s ease;
-}
-
-.upload-card:hover {
-  border-color: rgba(255,255,255,0.28);
-  background: rgba(255,255,255,0.09);
-}
-
-.upload-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.upload-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  font-size: 20px;
-  color: #fff;
-  background: linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
-  flex-shrink: 0;
-}
-
-.upload-text {
-  min-width: 0;
-}
-
-.upload-title {
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.upload-sub {
-  color: rgba(255,255,255,0.70);
-  font-size: 14px;
-  margin-top: 4px;
-  word-break: break-word;
-}
-
-.upload-buttons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.upload-btn,
-.remove-btn {
-  appearance: none;
-  border: 0;
-  border-radius: 12px;
-  padding: 11px 16px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform .18s ease, opacity .18s ease, background .18s ease;
-}
-
-.upload-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  color: #002c67;
-}
-
-.upload-btn:hover,
-.remove-btn:hover {
-  transform: translateY(-1px);
-  opacity: .95;
-}
-
-.remove-btn {
-  background: rgba(255,255,255,0.12);
-  color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.16);
-}
-
-.upload-preview {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.14);
-}
-
-.upload-preview img {
-  display: block;
-  width: 100%;
-  max-height: 260px;
-  object-fit: contain;
-  background: rgba(255,255,255,0.03);
-}
-
-.upload-card.has-file {
-  border-color: rgba(255,255,255,0.32);
-  background: rgba(255,255,255,0.10);
-}
-    <script>
-  const photoInput = document.getElementById('photoInput');
-  const fileMeta = document.getElementById('fileMeta');
-  const previewBox = document.getElementById('previewBox');
-  const previewImage = document.getElementById('previewImage');
-  const removePhoto = document.getElementById('removePhoto');
-  const uploadCard = document.getElementById('uploadCard');
-
-  let currentPreviewUrl = '';
-
-  function resetPhotoUI() {
-    if (currentPreviewUrl) {
-      URL.revokeObjectURL(currentPreviewUrl);
-      currentPreviewUrl = '';
-    }
-
-    photoInput.value = '';
-    fileMeta.textContent = 'ยังไม่ได้ใส่รูปเลย';
-    previewImage.removeAttribute('src');
-    previewBox.hidden = true;
-    removePhoto.hidden = true;
-    uploadCard.classList.remove('has-file');
-  }
-
-function updatePhotoUI(file) {
-  if (!file) {
-    resetPhotoUI();
-    return;
-  }
-
-  fileMeta.textContent =
-    file.name + " • " + (file.size / 1024 / 1024).toFixed(2) + " MB";
-
-  const reader = new FileReader();
-
-  reader.onload = function (e) {
-    previewImage.src = e.target.result;
-    previewBox.hidden = false;
-    removePhoto.hidden = false;
-    uploadCard.classList.add("has-file");
-  };
-
-  reader.readAsDataURL(file);
-}
-
-    if (currentPreviewUrl) {
-      URL.revokeObjectURL(currentPreviewUrl);
-      currentPreviewUrl = '';
-    }
-
-    fileMeta.textContent = file.name;
-    currentPreviewUrl = URL.createObjectURL(file);
-    previewImage.src = currentPreviewUrl;
-    previewBox.hidden = false;
-    removePhoto.hidden = false;
-    uploadCard.classList.add('has-file');
-  }
-
-  if (photoInput && fileMeta && previewBox && previewImage && removePhoto && uploadCard) {
-    photoInput.addEventListener('change', () => {
-      const file = photoInput.files && photoInput.files[0] ? photoInput.files[0] : null;
-      updatePhotoUI(file);
-    });
-
-    removePhoto.addEventListener('click', () => {
-      resetPhotoUI();
-    });
-  }
-</script>
   </style>
 </head>
 <body>
@@ -974,62 +916,45 @@ function updatePhotoUI(file) {
           ></textarea>
         </label>
 
-<div class="upload-field">
+        <div class="upload-field">
+          <label class="upload-label">Upload photo</label>
 
-  <label class="upload-label">Upload photo</label>
+          <input
+            id="photoInput"
+            type="file"
+            name="photo"
+            accept="image/*"
+            hidden
+          />
 
-  <input
-    id="photoInput"
-    type="file"
-    name="photo"
-    accept="image/*"
-    hidden
-  />
+          <div class="upload-card" id="uploadCard">
+            <div class="upload-row">
+              <div class="upload-icon">✦</div>
 
-  <div class="upload-card" id="uploadCard">
+              <div class="upload-text">
+                <div class="upload-title">Upload your photo</div>
+                <div class="upload-sub" id="fileMeta">ยังไม่ได้ใส่รูปเลย</div>
+              </div>
+            </div>
 
-    <div class="upload-row">
+            <div class="upload-buttons">
+              <label for="photoInput" class="upload-btn">Choose file</label>
 
-      <div class="upload-icon">
-        ✦
-      </div>
+              <button
+                type="button"
+                class="remove-btn"
+                id="removePhoto"
+                hidden
+              >
+                Remove
+              </button>
+            </div>
 
-      <div class="upload-text">
-        <div class="upload-title">
-          Upload your photo
+            <div class="upload-preview" id="previewBox">
+              <img id="previewImage" alt="Preview image" />
+            </div>
+          </div>
         </div>
-
-        <div class="upload-sub" id="fileMeta">
-          ยังไม่ได้ใส่รูปเลย
-        </div>
-      </div>
-
-    </div>
-
-    <div class="upload-buttons">
-
-      <label for="photoInput" class="upload-btn">
-        Choose file
-      </label>
-
-      <button
-        type="button"
-        class="remove-btn"
-        id="removePhoto"
-        hidden
-      >
-        Remove
-      </button>
-
-    </div>
-
-    <div class="upload-preview" id="previewBox" hidden>
-      <img id="previewImage">
-    </div>
-
-  </div>
-
-</div>
 
         <div id="progressWrap" class="progress-wrap" aria-live="polite">
           <div class="progress-label">
@@ -1053,22 +978,22 @@ function updatePhotoUI(file) {
     </div>
   </div>
 
-<div class="sparkle-rain-front" aria-hidden="true">
-  <span class="sparkle front big gold trail d1 f1"></span>
-  <span class="sparkle front d4 f2"></span>
-  <span class="sparkle front small gold trail d2 f3"></span>
-  <span class="sparkle front big d3 f4"></span>
-  <span class="sparkle front gold trail d2 f5"></span>
-  <span class="sparkle front big gold d5 f6"></span>
-  <span class="sparkle front small trail d1 f7"></span>
-  <span class="sparkle front d4 f8"></span>
+  <div class="sparkle-rain-front" aria-hidden="true">
+    <span class="sparkle front big gold trail d1 f1"></span>
+    <span class="sparkle front d4 f2"></span>
+    <span class="sparkle front small gold trail d2 f3"></span>
+    <span class="sparkle front big d3 f4"></span>
+    <span class="sparkle front gold trail d2 f5"></span>
+    <span class="sparkle front big gold d5 f6"></span>
+    <span class="sparkle front small trail d1 f7"></span>
+    <span class="sparkle front d4 f8"></span>
 
-  <span class="sparkle front big gold trail d1 b1"></span>
-  <span class="sparkle front d4 b2"></span>
-  <span class="sparkle front big gold trail d2 b4"></span>
-  <span class="sparkle front big trail d1 b7"></span>
-  <span class="sparkle front d5 b8"></span>
-</div>
+    <span class="sparkle front big gold trail d1 b1"></span>
+    <span class="sparkle front d4 b2"></span>
+    <span class="sparkle front big gold trail d2 b4"></span>
+    <span class="sparkle front big trail d1 b7"></span>
+    <span class="sparkle front d5 b8"></span>
+  </div>
 
   <script>
     const form = document.getElementById('joinForm');
@@ -1081,6 +1006,10 @@ function updatePhotoUI(file) {
 
     const photoInput = document.getElementById('photoInput');
     const fileMeta = document.getElementById('fileMeta');
+    const previewBox = document.getElementById('previewBox');
+    const previewImage = document.getElementById('previewImage');
+    const removePhoto = document.getElementById('removePhoto');
+    const uploadCard = document.getElementById('uploadCard');
 
     const progressWrap = document.getElementById('progressWrap');
     const progressText = document.getElementById('progressText');
@@ -1093,6 +1022,7 @@ function updatePhotoUI(file) {
 
     let isSubmitting = false;
     let compressedFile = null;
+    let currentPreviewUrl = '';
 
     function bytesToMB(bytes) {
       return (bytes / (1024 * 1024)).toFixed(2);
@@ -1130,17 +1060,6 @@ function updatePhotoUI(file) {
       progressText.textContent = 'Preparing upload...';
     }
 
-    function updateFileMeta(message) {
-      if (!message) {
-        fileMeta.classList.remove('show');
-        fileMeta.textContent = '';
-        return;
-      }
-
-      fileMeta.textContent = message;
-      fileMeta.classList.add('show');
-    }
-
     function normalizeIgValue(value) {
       return String(value || '').trim().replace(/^@+/, '');
     }
@@ -1167,6 +1086,40 @@ function updatePhotoUI(file) {
       }
 
       return { name, ig, message };
+    }
+
+    function resetPhotoUI() {
+      if (currentPreviewUrl) {
+        URL.revokeObjectURL(currentPreviewUrl);
+        currentPreviewUrl = '';
+      }
+
+      photoInput.value = '';
+      fileMeta.textContent = 'ยังไม่ได้ใส่รูปเลย';
+      previewImage.removeAttribute('src');
+      previewBox.classList.remove('show');
+      removePhoto.hidden = true;
+      uploadCard.classList.remove('has-file');
+      compressedFile = null;
+    }
+
+    function showPreviewFromFile(file) {
+      if (!file) {
+        previewImage.removeAttribute('src');
+        previewBox.classList.remove('show');
+        return;
+      }
+
+      if (currentPreviewUrl) {
+        URL.revokeObjectURL(currentPreviewUrl);
+        currentPreviewUrl = '';
+      }
+
+      currentPreviewUrl = URL.createObjectURL(file);
+      previewImage.src = currentPreviewUrl;
+      previewBox.classList.add('show');
+      removePhoto.hidden = false;
+      uploadCard.classList.add('has-file');
     }
 
     async function compressImage(file) {
@@ -1259,41 +1212,6 @@ function updatePhotoUI(file) {
       setTimeout(() => burst.remove(), 900);
     }
 
-    photoInput.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      compressedFile = null;
-      hideMessages();
-
-      if (!file) {
-        updateFileMeta('');
-        return;
-      }
-
-      try {
-        setProgress(5, 'Preparing image...');
-        setSubmitState(true, 'Preparing image...');
-
-        const originalSize = bytesToMB(file.size);
-        compressedFile = await compressImage(file);
-
-        const compressedSize = bytesToMB(compressedFile.size);
-        updateFileMeta(`Ready: ${file.name} • ${originalSize} MB → ${compressedSize} MB`);
-        setProgress(100, 'Image ready');
-      } catch (error) {
-        photoInput.value = '';
-        compressedFile = null;
-        updateFileMeta('');
-        showError(error.message || 'ไม่สามารถย่อรูปได้ กรุณาลองใหม่');
-      } finally {
-        setTimeout(() => {
-          if (!isSubmitting) {
-            hideProgress();
-            setSubmitState(false, 'Join to Sworld');
-          }
-        }, 400);
-      }
-    });
-
     function uploadWithProgress(formData) {
       return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -1324,6 +1242,48 @@ function updatePhotoUI(file) {
         xhr.send(formData);
       });
     }
+
+    photoInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      compressedFile = null;
+      hideMessages();
+
+      if (!file) {
+        resetPhotoUI();
+        return;
+      }
+
+      showPreviewFromFile(file);
+
+      try {
+        setProgress(5, 'Preparing image...');
+        setSubmitState(true, 'Preparing image...');
+
+        const originalSize = bytesToMB(file.size);
+        compressedFile = await compressImage(file);
+
+        const compressedSize = bytesToMB(compressedFile.size);
+        fileMeta.textContent = `Ready: ${file.name} • ${originalSize} MB → ${compressedSize} MB`;
+        setProgress(100, 'Image ready');
+      } catch (error) {
+        resetPhotoUI();
+        showError(error.message || 'ไม่สามารถย่อรูปได้ กรุณาลองใหม่');
+      } finally {
+        setTimeout(() => {
+          if (!isSubmitting) {
+            hideProgress();
+            setSubmitState(false, 'Join to Sworld');
+          }
+        }, 400);
+      }
+    });
+
+    removePhoto.addEventListener('click', () => {
+      resetPhotoUI();
+      hideMessages();
+      hideProgress();
+      setSubmitState(false, 'Join to Sworld');
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -1364,9 +1324,8 @@ function updatePhotoUI(file) {
             compressedFile = await compressImage(rawFile);
             formData.set('photo', compressedFile);
 
-            updateFileMeta(
-              `Ready: ${rawFile.name} • ${bytesToMB(rawFile.size)} MB → ${bytesToMB(compressedFile.size)} MB`
-            );
+            fileMeta.textContent =
+              `Ready: ${rawFile.name} • ${bytesToMB(rawFile.size)} MB → ${bytesToMB(compressedFile.size)} MB`;
           }
         }
 
@@ -1380,8 +1339,7 @@ function updatePhotoUI(file) {
         sparkleBurst(window.innerWidth / 2, window.innerHeight / 2);
 
         form.reset();
-        compressedFile = null;
-        updateFileMeta('');
+        resetPhotoUI();
       } catch (error) {
         showError(error.message || 'Submit failed');
       } finally {
