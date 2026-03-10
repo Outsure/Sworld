@@ -4,35 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sworld Display</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-:root {
-  --font-en: 'Inter', sans-serif;
-  --font-th: 'Prompt', sans-serif;
-  --text: #ffffff;
+    :root {
+      --font-th: 'Prompt', sans-serif;
+      --font-en-body: 'Montserrat', sans-serif;
+      --font-en-heading: 'Feeling Passionate', cursive;
+      --text: #ffffff;
       --sub: rgba(255,255,255,0.85);
       --accent: #ffffff;
       --accent-2: #dbe8ff;
       --panel: rgba(255,255,255,0.10);
       --line: rgba(255,255,255,0.25);
     }
-@font-face {
-  font-family: 'SworldMixed';
-  src: local('Prompt');
-  unicode-range: U+0E00-0E7F;
+
+    /* ถ้ามีไฟล์ฟอนต์ Feeling Passionate ให้ใช้บล็อกนี้ */
+    @font-face {
+      font-family: 'Feeling Passionate';
+      src: url('/fonts/feeling-passionate.woff2') format('woff2'),
+           url('/fonts/feeling-passionate.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: 'SworldMixed', var(--font-en), var(--font-th), sans-serif;
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
       color: var(--text);
-      background:
-        linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)),
-        url('/sworld-stage.jpg') center/cover no-repeat fixed;
+      background: linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)), url('/sworld-stage.jpg') center/cover no-repeat fixed;
       overflow: hidden;
       position: relative;
     }
@@ -90,6 +99,7 @@
       color: var(--sub);
       font-size: 22px;
       font-weight: 600;
+      font-family: var(--font-en-body);
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
       width: fit-content;
@@ -104,10 +114,19 @@
     }
 
     .title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-th);
       font-size: 28px;
       line-height: 1.1;
       margin: 14px 0 10px;
+    }
+
+    .title-en {
+      font-family: var(--font-en-heading);
+      font-size: 42px;
+      line-height: 1.05;
+      margin: 8px 0 6px;
+      font-weight: normal;
+      letter-spacing: 0.01em;
     }
 
     .name {
@@ -117,6 +136,7 @@
       word-break: break-word;
       transition: opacity .25s ease, transform .25s ease;
       will-change: opacity, transform;
+      font-family: var(--font-th);
     }
 
     .ig {
@@ -126,6 +146,7 @@
       font-weight: 700;
       transition: opacity .25s ease, transform .25s ease;
       will-change: opacity, transform;
+      font-family: var(--font-en-body);
     }
 
     .msg {
@@ -138,6 +159,7 @@
       font-weight: 700;
       transition: opacity .25s ease, transform .25s ease;
       will-change: opacity, transform;
+      font-family: var(--font-th);
     }
 
     .qr-header {
@@ -188,6 +210,7 @@
       font-size: 14px;
       color: var(--sub);
       word-break: break-all;
+      font-family: var(--font-en-body);
     }
 
     .counter {
@@ -196,6 +219,7 @@
       left: 24px;
       font-size: 14px;
       color: var(--sub);
+      font-family: var(--font-en-body);
     }
 
     .fade-enter {
@@ -214,8 +238,9 @@
     <section class="panel">
       <div class="header-note">
         <img src="/sworld-logo.png" alt="Sworld logo" />
-        <span>Wedding Sworld Wall</span>
+        <span>Welcome to Sworld</span>
       </div>
+
       <h1 class="title">อวยพรให้วีกับตั๋ง หรือ แจกวาร์ป!</h1>
       <div class="name" id="name">Waiting...</div>
       <div class="ig" id="ig">@guest</div>
@@ -235,10 +260,9 @@
 
       <div class="qr-box">
         <div>
-          <h2 class="title" style="font-size:42px; margin:8px 0 6px;">Join</h2>
+          <h2 class="title-en">Join</h2>
           <div class="small">QR opens the guest input page directly</div>
         </div>
-
         <img class="qr" id="qr" alt="QR code" />
         <div class="small" id="joinUrl">Loading QR...</div>
       </div>
@@ -283,7 +307,6 @@
           resolve('/default-avatar.png');
           return;
         }
-
         const img = new Image();
         img.onload = () => resolve(src);
         img.onerror = () => resolve('/default-avatar.png');
@@ -362,6 +385,7 @@
 
     async function rotateNext() {
       if (!entries.length) return;
+
       if (entries.length === 1) {
         await renderCard(entries[0]);
         return;
