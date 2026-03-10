@@ -290,13 +290,12 @@
     .f7  { left: 82%; animation-delay: 5.2s, .5s; }
     .f8  { left: 90%; animation-delay: 2.8s, 1.2s; }
 
-    .page {
-      min-height: calc(100vh - 32px);
-      display: grid;
-      place-items: center;
-      position: relative;
-      z-index: 3;
-    }
+.page {
+  min-height: auto;
+  display: block;
+  position: relative;
+  z-index: 3;
+}
 
     .wrap {
       width: 100%;
@@ -311,6 +310,7 @@
       position: relative;
       z-index: 3;
       overflow: hidden;
+      margin: 0 auto;
     }
 
     .wrap::before {
@@ -844,7 +844,7 @@ body::after {
       .wrap {
         border-radius: 24px;
         padding: 20px 18px;
-        margin: 4px 0 18px;
+        margin: 4px auto 18px;
       }
 
       .brand img {
