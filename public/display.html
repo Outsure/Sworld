@@ -42,6 +42,11 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -72,6 +77,38 @@
       z-index: 0;
     }
 
+    .milky-way {
+      position: fixed;
+      inset: -20%;
+      pointer-events: none;
+      z-index: 12;
+      overflow: hidden;
+    }
+
+    .milky-way::before {
+      content: "";
+      position: absolute;
+      width: 180vmax;
+      height: 22vmax;
+      left: -130vmax;
+      top: 18%;
+      transform: rotate(-18deg);
+      opacity: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.05) 20%,
+        rgba(219,232,255,0.18) 40%,
+        rgba(255,231,168,0.22) 50%,
+        rgba(219,232,255,0.18) 60%,
+        rgba(255,255,255,0.05) 80%,
+        rgba(255,255,255,0) 100%
+      );
+      filter: blur(10px);
+      mix-blend-mode: screen;
+      animation: milkySweep 30s ease-in-out infinite;
+    }
+
     .sparkle-rain-back,
     .sparkle-rain-front {
       position: fixed;
@@ -80,7 +117,10 @@
       overflow: hidden;
     }
 
-    .sparkle-rain-back { z-index: 1; }
+    .sparkle-rain-back {
+      z-index: 1;
+    }
+
     .sparkle-rain-front {
       z-index: 15;
       perspective: 900px;
@@ -95,6 +135,187 @@
       height: 100vh;
       gap: 22px;
       padding: 24px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 24px;
+      backdrop-filter: blur(5px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 22px 60px rgba(0,0,0,0.28);
+      z-index: 3;
+    }
+
+    .panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent 24%);
+      pointer-events: none;
+    }
+
+    .header-note {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--sub);
+      font-size: 22px;
+      font-weight: 600;
+      font-family: var(--font-en-body);
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.05);
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 16px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .header-note img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .title {
+      font-family: var(--font-th);
+      font-size: 28px;
+      line-height: 1.1;
+      margin: 14px 0 10px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .title-en {
+      font-family: var(--font-en-heading);
+      font-size: 42px;
+      line-height: 1.05;
+      margin: 8px 0 6px;
+      font-weight: normal;
+      letter-spacing: 0.01em;
+      position: relative;
+      z-index: 4;
+    }
+
+    .name {
+      font-size: clamp(22px, 2vw, 30px);
+      font-weight: 800;
+      margin: 20px 0 14px;
+      word-break: break-word;
+      transition: opacity .25s ease, transform .25s ease;
+      will-change: opacity, transform;
+      font-family: var(--font-th);
+      position: relative;
+      z-index: 4;
+    }
+
+    .ig {
+      font-size: clamp(22px, 1.9vw, 30px);
+      color: var(--accent);
+      margin-bottom: 24px;
+      font-weight: 700;
+      transition: opacity .25s ease, transform .25s ease;
+      will-change: opacity, transform;
+      font-family: var(--font-en-body);
+      position: relative;
+      z-index: 4;
+    }
+
+    .msg {
+      font-size: clamp(22px, 1.9vw, 30px);
+      max-width: 28ch;
+      color: var(--sub);
+      margin-top: 28px;
+      line-height: 1.55;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+      transition: opacity .25s ease, transform .25s ease;
+      will-change: opacity, transform;
+      font-family: var(--font-th);
+      position: relative;
+      z-index: 4;
+    }
+
+    .qr-header {
+      justify-content: flex-start;
+      font-size: 22px;
+      width: 100%;
+    }
+
+    .photo-wrap {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .photo {
+      width: min(68vh, 100%);
+      max-width: 100%;
+      max-height: calc(100vh - 96px);
+      aspect-ratio: 3 / 4;
+      object-fit: contain;
+      border-radius: 36px;
+      border: 2px solid rgba(255,255,255,0.14);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      background: #14213c;
+      transition: opacity .3s ease, transform .3s ease;
+      will-change: opacity, transform;
+      position: relative;
+      z-index: 4;
+    }
+
+    .qr-box {
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+      text-align: center;
+      align-content: center;
+      margin-top: 40px;
+      position: relative;
+      z-index: 4;
+      min-height: calc(100% - 120px);
+    }
+
+    .qr {
+      width: 200px;
+      height: 200px;
+      background: #fff;
+      padding: 12px;
+      border-radius: 20px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+      object-fit: contain;
+    }
+
+    .small {
+      font-size: 14px;
+      color: var(--sub);
+      word-break: break-all;
+      font-family: var(--font-en-body);
+    }
+
+    .counter {
+      position: absolute;
+      bottom: 22px;
+      left: 24px;
+      font-size: 14px;
+      color: var(--sub);
+      font-family: var(--font-en-body);
+      z-index: 4;
+    }
+
+    .fade-enter {
+      opacity: 0;
+      transform: translateY(8px) scale(.992);
+    }
+
+    .fade-enter-active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     .sparkle {
@@ -113,7 +334,6 @@
       height: 24px;
       opacity: 0;
       will-change: transform, opacity, filter;
-
       animation:
         starFall var(--fall-duration) linear infinite,
         starTwinkle var(--twinkle-duration) ease-in-out infinite;
@@ -145,8 +365,13 @@
         0 0 38px rgba(255,211,110,0.50);
     }
 
-    .sparkle.big::before { font-size: 34px; }
-    .sparkle.small::before { font-size: 18px; }
+    .sparkle.big::before {
+      font-size: 34px;
+    }
+
+    .sparkle.small::before {
+      font-size: 18px;
+    }
 
     .sparkle.front::before {
       text-shadow:
@@ -167,7 +392,6 @@
       opacity: 0.72;
     }
 
-    /* หางดาวอยู่เหนือดาว */
     .sparkle.trail::after {
       content: "";
       position: absolute;
@@ -197,6 +421,18 @@
         rgba(255,211,110,0.07) 58%,
         rgba(255,211,110,0) 100%
       );
+    }
+
+    .sparkle.dive {
+      animation:
+        starDive var(--fall-duration) linear infinite,
+        starTwinkle var(--twinkle-duration) ease-in-out infinite;
+    }
+
+    .sparkle.dive::before {
+      filter:
+        drop-shadow(0 0 10px rgba(255,255,255,0.90))
+        drop-shadow(0 0 24px rgba(219,232,255,0.72));
     }
 
     .d1 {
@@ -280,183 +516,6 @@
     .f9  { left: 79%; animation-delay: 4.1s, .6s; }
     .f10 { left: 88%; animation-delay: 1.7s, 1s; }
 
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 24px;
-      backdrop-filter: blur(5px);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 22px 60px rgba(0,0,0,0.28);
-      z-index: 3;
-    }
-
-    .panel::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent 24%);
-      pointer-events: none;
-    }
-
-    .header-note {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      color: var(--sub);
-      font-size: 22px;
-      font-weight: 600;
-      font-family: var(--font-en-body);
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.05);
-      width: fit-content;
-      padding: 10px 14px;
-      border-radius: 16px;
-      position: relative;
-      z-index: 4;
-    }
-
-    .header-note img {
-      width: 90px;
-      height: 90px;
-      object-fit: contain;
-    }
-
-    .title {
-      font-family: var(--font-th);
-      font-size: 28px;
-      line-height: 1.1;
-      margin: 14px 0 10px;
-      position: relative;
-      z-index: 4;
-    }
-
-    .title-en {
-      font-family: var(--font-en-heading);
-      font-size: 42px;
-      line-height: 1.05;
-      margin: 8px 0 6px;
-      font-weight: normal;
-      letter-spacing: 0.01em;
-      position: relative;
-      z-index: 4;
-    }
-
-    .name {
-      font-size: clamp(22px, 2vw, 30px);
-      font-weight: 800;
-      margin: 20px 0 14px;
-      word-break: break-word;
-      transition: opacity .25s ease, transform .25s ease;
-      will-change: opacity, transform;
-      font-family: var(--font-th);
-      position: relative;
-      z-index: 4;
-    }
-
-    .ig {
-      font-size: clamp(22px, 1.9vw, 30px);
-      color: var(--accent);
-      margin-bottom: 24px;
-      font-weight: 700;
-      transition: opacity .25s ease, transform .25s ease;
-      will-change: opacity, transform;
-      font-family: var(--font-en-body);
-      position: relative;
-      z-index: 4;
-    }
-
-    .msg {
-      font-size: clamp(22px, 1.9vw, 30px);
-      max-width: 28ch;
-      color: var(--sub);
-      margin-top: 28px;
-      line-height: 1.55;
-      letter-spacing: 0.02em;
-      font-weight: 700;
-      transition: opacity .25s ease, transform .25s ease;
-      will-change: opacity, transform;
-      font-family: var(--font-th);
-      position: relative;
-      z-index: 4;
-    }
-
-    .qr-header {
-      justify-content: flex-start;
-      font-size: 22px;
-      width: 100%;
-    }
-
-    .photo-wrap {
-      height: 100%;
-      display: grid;
-      place-items: center;
-      position: relative;
-    }
-
-    .photo {
-      width: min(68vh, 100%);
-      max-height: calc(100vh - 96px);
-      aspect-ratio: 3 / 4;
-      object-fit: contain;
-      border-radius: 36px;
-      border: 2px solid rgba(255,255,255,0.14);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-      background: #14213c;
-      transition: opacity .3s ease, transform .3s ease;
-      will-change: opacity, transform;
-      position: relative;
-      z-index: 4;
-    }
-
-    .qr-box {
-      display: grid;
-      gap: 18px;
-      justify-items: center;
-      text-align: center;
-      align-content: center;
-      margin-top: 40px;
-      position: relative;
-      z-index: 4;
-    }
-
-    .qr {
-      width: 200px;
-      height: 200px;
-      background: #fff;
-      padding: 12px;
-      border-radius: 20px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
-    }
-
-    .small {
-      font-size: 14px;
-      color: var(--sub);
-      word-break: break-all;
-      font-family: var(--font-en-body);
-    }
-
-    .counter {
-      position: absolute;
-      bottom: 22px;
-      left: 24px;
-      font-size: 14px;
-      color: var(--sub);
-      font-family: var(--font-en-body);
-      z-index: 4;
-    }
-
-    .fade-enter {
-      opacity: 0;
-      transform: translateY(8px) scale(.992);
-    }
-
-    .fade-enter-active {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
     @keyframes starFall {
       0% {
         transform: translate3d(0, -16vh, 0) scale(.88);
@@ -470,6 +529,23 @@
       }
       100% {
         transform: translate3d(var(--drift-x), 120vh, 0) scale(1.08);
+        opacity: 0;
+      }
+    }
+
+    @keyframes starDive {
+      0% {
+        transform: translate3d(0, -15vh, -500px) scale(.2);
+        opacity: 0;
+      }
+      12% {
+        opacity: 1;
+      }
+      55% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(var(--drift-x), 115vh, 320px) scale(2.2);
         opacity: 0;
       }
     }
@@ -490,88 +566,56 @@
       to {
         transform: rotate(360deg);
       }
-      .sparkle.dive {
-  animation:
-    starDive var(--fall-duration) linear infinite,
-    starTwinkle var(--twinkle-duration) ease-in-out infinite;
-}
-
-@keyframes starDive {
-
-  0%{
-    transform: translate3d(0,-18vh,-420px) scale(.35);
-    opacity:0;
-  }
-
-  10%{
-    opacity:1;
-  }
-
-  40%{
-    opacity:.95;
-  }
-
-  100%{
-    transform: translate3d(var(--drift-x),120vh,280px) scale(1.7);
-    opacity:0;
-  }
-
-}
     }
-    .milky-way {
-  position: fixed;
-  inset: -20%;
-  pointer-events: none;
-  z-index: 12;
-  overflow: hidden;
-}
 
-.milky-way::before {
-  content:"";
-  position:absolute;
-  width:180vmax;
-  height:22vmax;
-  left:-130vmax;
-  top:18%;
-  transform:rotate(-18deg);
-  opacity:0;
+    @keyframes milkySweep {
+      0%, 80%, 100% {
+        transform: translateX(0) rotate(-18deg);
+        opacity: 0;
+      }
+      85% {
+        opacity: 0.25;
+      }
+      92% {
+        transform: translateX(120vmax) rotate(-18deg);
+        opacity: 0.35;
+      }
+    }
 
-  background:linear-gradient(
-    90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.05) 20%,
-    rgba(219,232,255,0.18) 40%,
-    rgba(255,231,168,0.22) 50%,
-    rgba(219,232,255,0.18) 60%,
-    rgba(255,255,255,0.05) 80%,
-    rgba(255,255,255,0) 100%
-  );
+    @media (max-width: 1280px) {
+      .layout {
+        grid-template-columns: 1fr 1.1fr 1fr;
+        gap: 18px;
+        padding: 18px;
+      }
 
-  filter:blur(10px);
+      .title {
+        font-size: 24px;
+      }
 
-  animation:milkySweep 30s ease-in-out infinite;
-}
+      .title-en {
+        font-size: 36px;
+      }
 
-@keyframes milkySweep {
+      .header-note {
+        font-size: 18px;
+      }
 
-  0%,80%,100%{
-    transform:translateX(0) rotate(-18deg);
-    opacity:0;
-  }
+      .header-note img {
+        width: 72px;
+        height: 72px;
+      }
 
-  85%{
-    opacity:0.25;
-  }
-
-  92%{
-    transform:translateX(120vmax) rotate(-18deg);
-    opacity:0.35;
-  }
-}
+      .qr {
+        width: 170px;
+        height: 170px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="milky-way"></div>
+
   <div class="sparkle-rain-back" aria-hidden="true">
     <span class="sparkle back small d6 b1"></span>
     <span class="sparkle back d5 b2"></span>
@@ -624,9 +668,10 @@
     <span class="sparkle front d5 f8"></span>
     <span class="sparkle front big gold trail d2 f9"></span>
     <span class="sparkle front small gold d4 f10"></span>
-  <span class="sparkle front big gold trail dive d1" style="left:12%; animation-delay:7s;"></span>
-  <span class="sparkle front dive d2" style="left:58%; animation-delay:12s;"></span>
-  <span class="sparkle front big gold dive d3" style="left:84%; animation-delay:16s;"></span>
+
+    <span class="sparkle front big gold trail dive d1" style="left:12%; animation-delay:7s, 1s;"></span>
+    <span class="sparkle front dive d2" style="left:58%; animation-delay:12s, .6s;"></span>
+    <span class="sparkle front big gold dive d3" style="left:84%; animation-delay:16s, .8s;"></span>
   </div>
 
   <script>
@@ -658,18 +703,21 @@
     }
 
     function safeText(value, fallback = '') {
-      return String(value || fallback);
+      return String(value ?? fallback);
     }
 
     function preloadImage(src) {
       return new Promise((resolve) => {
+        const fallback = '/default-avatar.png';
+
         if (!src) {
-          resolve('/default-avatar.png');
+          resolve(fallback);
           return;
         }
+
         const img = new Image();
         img.onload = () => resolve(src);
-        img.onerror = () => resolve('/default-avatar.png');
+        img.onerror = () => resolve(fallback);
         img.src = src;
       });
     }
@@ -679,6 +727,7 @@
         el.classList.remove('fade-enter', 'fade-enter-active');
         void el.offsetWidth;
         el.classList.add('fade-enter');
+
         requestAnimationFrame(() => {
           el.classList.add('fade-enter-active');
         });
@@ -698,7 +747,10 @@
       const cleanIg = safeText(item.ig, '').replace(/^@/, '');
       ig.textContent = cleanIg ? '@' + cleanIg : '';
 
-      message.textContent = safeText(item.message, 'Happy to celebrate with the couple tonight ✨');
+      message.textContent = safeText(
+        item.message,
+        'Happy to celebrate with the couple tonight ✨'
+      );
 
       if (currentPhotoSrc !== nextPhotoSrc) {
         photo.src = nextPhotoSrc;
@@ -764,15 +816,21 @@
         if (!res.ok) throw new Error('Failed to load QR');
 
         const data = await res.json();
-        document.getElementById('qr').src = data.qr;
-        document.getElementById('joinUrl').textContent = data.url;
+
+        if (data?.qr) {
+          document.getElementById('qr').src = data.qr;
+        }
+
+        document.getElementById('joinUrl').textContent = data?.url || 'QR unavailable';
       } catch (error) {
         console.error('loadQr error:', error);
+        document.getElementById('joinUrl').textContent = 'QR unavailable';
       }
     }
 
     function startRotation() {
       if (rotateTimer) clearInterval(rotateTimer);
+
       rotateTimer = setInterval(() => {
         rotateNext();
       }, 15000);
@@ -780,6 +838,7 @@
 
     function startRefresh() {
       if (refreshTimer) clearInterval(refreshTimer);
+
       refreshTimer = setInterval(() => {
         loadEntries(false);
       }, 20000);
@@ -793,9 +852,12 @@
     }
 
     document.getElementById('photo').addEventListener('error', function () {
-      if (this.src !== `${window.location.origin}/default-avatar.png`) {
-        this.src = '/default-avatar.png';
-        currentPhotoSrc = '/default-avatar.png';
+      const fallback = '/default-avatar.png';
+      const current = this.getAttribute('src') || '';
+
+      if (!current.endsWith(fallback)) {
+        this.src = fallback;
+        currentPhotoSrc = fallback;
       }
     });
 
