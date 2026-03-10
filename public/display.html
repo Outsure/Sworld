@@ -490,6 +490,33 @@
       to {
         transform: rotate(360deg);
       }
+      .sparkle.dive {
+  animation:
+    starDive var(--fall-duration) linear infinite,
+    starTwinkle var(--twinkle-duration) ease-in-out infinite;
+}
+
+@keyframes starDive {
+
+  0%{
+    transform: translate3d(0,-18vh,-420px) scale(.35);
+    opacity:0;
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  40%{
+    opacity:.95;
+  }
+
+  100%{
+    transform: translate3d(var(--drift-x),120vh,280px) scale(1.7);
+    opacity:0;
+  }
+
+}
     }
     .milky-way {
   position: fixed;
@@ -597,6 +624,9 @@
     <span class="sparkle front d5 f8"></span>
     <span class="sparkle front big gold trail d2 f9"></span>
     <span class="sparkle front small gold d4 f10"></span>
+  <span class="sparkle front big gold trail dive d1" style="left:12%; animation-delay:7s;"></span>
+  <span class="sparkle front dive d2" style="left:58%; animation-delay:12s;"></span>
+  <span class="sparkle front big gold dive d3" style="left:84%; animation-delay:16s;"></span>
   </div>
 
   <script>
