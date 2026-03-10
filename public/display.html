@@ -20,8 +20,8 @@
       --accent: #ffffff;
       --accent-2: #dbe8ff;
 
-      --panel: rgba(255,255,255,0.05);
-      --line: rgba(255,255,255,0.12);
+      --panel: rgba(255,255,255,0.025);
+      --line: rgba(255,255,255,0.006);
 
       --star-white: #ffffff;
       --star-ice: #dbe8ff;
@@ -164,36 +164,36 @@
     }
 
     /* หางดาวแบบเนียนขึ้น */
-    .sparkle.trail::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 55%;
-      width: var(--trail-width);
-      height: var(--trail-height);
-      transform: translateX(-50%);
-      transform-origin: top center;
-      border-radius: 999px;
-      opacity: var(--trail-opacity);
-      filter: blur(var(--trail-blur));
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.26) 0%,
-        rgba(255,255,255,0.16) 26%,
-        rgba(219,232,255,0.08) 58%,
-        rgba(219,232,255,0) 100%
-      );
-    }
+.sparkle.trail::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 52%;
+  width: var(--trail-width);
+  height: var(--trail-height);
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+  border-radius: 999px;
+  opacity: var(--trail-opacity);
+  filter: blur(var(--trail-blur));
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,0.28) 0%,
+    rgba(255,255,255,0.16) 26%,
+    rgba(219,232,255,0.08) 58%,
+    rgba(219,232,255,0) 100%
+  );
+}
 
-    .sparkle.trail.gold::after {
-      background: linear-gradient(
-        to bottom,
-        rgba(255,231,168,0.24) 0%,
-        rgba(255,211,110,0.15) 28%,
-        rgba(255,211,110,0.07) 58%,
-        rgba(255,211,110,0) 100%
-      );
-    }
+.sparkle.trail.gold::after {
+  background: linear-gradient(
+    to top,
+    rgba(255,231,168,0.24) 0%,
+    rgba(255,211,110,0.15) 28%,
+    rgba(255,211,110,0.07) 58%,
+    rgba(255,211,110,0) 100%
+  );
+}
 
     /* speed presets = trail ไล่ตามความเร็ว */
     .d1 {
@@ -290,7 +290,7 @@
       border: 1px solid var(--line);
       border-radius: 30px;
       padding: 24px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(5px);
       position: relative;
       overflow: hidden;
       box-shadow: 0 22px 60px rgba(0,0,0,0.28);
@@ -301,7 +301,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 24%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent 24%);
       pointer-events: none;
     }
 
