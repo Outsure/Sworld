@@ -14,12 +14,15 @@
       --font-th: 'Prompt', sans-serif;
       --font-en-body: 'Montserrat', sans-serif;
       --font-en-heading: 'Feeling Passionate', cursive;
+
       --text: #ffffff;
       --sub: rgba(255,255,255,0.85);
       --accent: #ffffff;
       --accent-2: #dbe8ff;
+
       --panel: rgba(255,255,255,0.05);
       --line: rgba(255,255,255,0.12);
+
       --star-white: #ffffff;
       --star-ice: #dbe8ff;
       --star-gold: #ffe7a8;
@@ -44,7 +47,9 @@
       min-height: 100vh;
       font-family: var(--font-th), var(--font-en-body), sans-serif;
       color: var(--text);
-      background: linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)), url('/sworld-stage.jpg') center/cover no-repeat fixed;
+      background:
+        linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)),
+        url('/sworld-stage.jpg') center/cover no-repeat fixed;
       overflow: hidden;
       position: relative;
     }
@@ -67,16 +72,17 @@
       z-index: 0;
     }
 
-    /* layer หลัง panel */
-    .sparkle-rain-back {
+    .sparkle-rain-back,
+    .sparkle-rain-front {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 1;
       overflow: hidden;
     }
 
-    /* layout หลัก */
+    .sparkle-rain-back { z-index: 1; }
+    .sparkle-rain-front { z-index: 7; }
+
     .layout {
       position: relative;
       z-index: 3;
@@ -87,127 +93,175 @@
       padding: 24px;
     }
 
-    /* layer หน้า panel */
-    .sparkle-rain-front {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 7;
-      overflow: hidden;
+    .sparkle {
+      --fall-duration: 10s;
+      --twinkle-duration: 2.8s;
+      --spin-duration: 9s;
+      --drift-x: -40px;
+      --trail-height: 88px;
+      --trail-width: 2px;
+      --trail-opacity: 0.28;
+      --trail-blur: 1px;
+
+      position: absolute;
+      top: -18%;
+      width: 24px;
+      height: 24px;
+      opacity: 0;
+      will-change: transform, opacity, filter;
+
+      animation:
+        starFall var(--fall-duration) linear infinite,
+        starTwinkle var(--twinkle-duration) ease-in-out infinite;
     }
 
-.sparkle {
-  position: absolute;
-  top: -16%;
-  width: 24px;
-  height: 24px;
-  opacity: 0;
-  will-change: transform, opacity, filter;
-  animation-name: starFall, starTwinkle;
-  animation-timing-function: linear, ease-in-out;
-  animation-iteration-count: infinite, infinite;
-}
-
-.sparkle::before {
-  content: "✦";
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  animation: starSpin 8s linear infinite;
-  line-height: 1;
-  color: var(--star-white);
-  text-shadow:
-    0 0 10px rgba(255,255,255,0.98),
-    0 0 22px rgba(255,255,255,0.75),
-    0 0 40px rgba(219,232,255,0.75);
-  transform-origin: center;
-  animation: starSpin 8s linear infinite;
-}
+    .sparkle::before {
+      content: "✦";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--star-white);
+      transform-origin: center;
+      animation: starSpin var(--spin-duration) linear infinite;
+      text-shadow:
+        0 0 10px rgba(255,255,255,0.98),
+        0 0 22px rgba(255,255,255,0.74),
+        0 0 40px rgba(219,232,255,0.72);
+    }
 
     .sparkle.gold::before {
       color: var(--star-gold);
       text-shadow:
         0 0 10px rgba(255,231,168,0.98),
-        0 0 20px rgba(255,211,110,0.75),
-        0 0 38px rgba(255,211,110,0.55);
+        0 0 22px rgba(255,211,110,0.68),
+        0 0 38px rgba(255,211,110,0.50);
     }
 
-    .sparkle.big::before {
-      font-size: 34px;
-    }
-
-    .sparkle.small::before {
-      font-size: 18px;
-    }
+    .sparkle.big::before { font-size: 34px; }
+    .sparkle.small::before { font-size: 18px; }
 
     .sparkle.front::before {
       text-shadow:
         0 0 12px rgba(255,255,255,1),
-        0 0 28px rgba(255,255,255,0.95),
-        0 0 52px rgba(219,232,255,0.88);
+        0 0 28px rgba(255,255,255,0.92),
+        0 0 52px rgba(219,232,255,0.82);
     }
 
     .sparkle.front.gold::before {
       text-shadow:
         0 0 12px rgba(255,231,168,1),
-        0 0 28px rgba(255,211,110,0.95),
-        0 0 54px rgba(255,211,110,0.72);
+        0 0 28px rgba(255,211,110,0.88),
+        0 0 52px rgba(255,211,110,0.68);
     }
 
     .sparkle.back {
-      filter: blur(.15px);
+      filter: blur(0.2px);
       opacity: 0.92;
     }
 
-    /* หางดาวให้เห็นชัด */
-   .sparkle.trail::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 56%;
-  width: 2px;
-  height: 90px;
-  transform: translateX(-50%);
-  border-radius: 999px;
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.42) 0%,
-    rgba(255,255,255,0.22) 30%,
-    rgba(219,232,255,0.10) 65%,
-    rgba(219,232,255,0) 100%
-  );
-  filter: blur(0.8px);
-  opacity: 0.55;
-}
-
-.sparkle.trail.gold::after {
-  background: linear-gradient(
-    to bottom,
-    rgba(255,231,168,0.38) 0%,
-    rgba(255,211,110,0.20) 32%,
-    rgba(255,211,110,0.08) 65%,
-    rgba(255,211,110,0) 100%
-  );
-}
-
-    .sparkle.long-trail::after {
-      height: 170px;
-      width: 4px;
-      opacity: 1;
+    /* หางดาวแบบเนียนขึ้น */
+    .sparkle.trail::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      width: var(--trail-width);
+      height: var(--trail-height);
+      transform: translateX(-50%);
+      transform-origin: top center;
+      border-radius: 999px;
+      opacity: var(--trail-opacity);
+      filter: blur(var(--trail-blur));
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.26) 0%,
+        rgba(255,255,255,0.16) 26%,
+        rgba(219,232,255,0.08) 58%,
+        rgba(219,232,255,0) 100%
+      );
     }
 
-    /* random speed + delay */
-    .d1 { animation-duration: 8.8s, 2.2s; }
-    .d2 { animation-duration: 9.6s, 2.9s; }
-    .d3 { animation-duration: 10.4s, 2.4s; }
-    .d4 { animation-duration: 11.2s, 3.1s; }
-    .d5 { animation-duration: 12.0s, 2.6s; }
-    .d6 { animation-duration: 13.2s, 3.4s; }
+    .sparkle.trail.gold::after {
+      background: linear-gradient(
+        to bottom,
+        rgba(255,231,168,0.24) 0%,
+        rgba(255,211,110,0.15) 28%,
+        rgba(255,211,110,0.07) 58%,
+        rgba(255,211,110,0) 100%
+      );
+    }
 
-    /* back positions */
+    /* speed presets = trail ไล่ตามความเร็ว */
+    .d1 {
+      --fall-duration: 8.6s;
+      --twinkle-duration: 2.0s;
+      --spin-duration: 6.5s;
+      --drift-x: -60px;
+      --trail-height: 132px;
+      --trail-width: 3px;
+      --trail-opacity: 0.38;
+      --trail-blur: 0.8px;
+    }
+
+    .d2 {
+      --fall-duration: 9.4s;
+      --twinkle-duration: 2.5s;
+      --spin-duration: 7.2s;
+      --drift-x: -52px;
+      --trail-height: 116px;
+      --trail-width: 2.5px;
+      --trail-opacity: 0.33;
+      --trail-blur: 0.9px;
+    }
+
+    .d3 {
+      --fall-duration: 10.3s;
+      --twinkle-duration: 2.3s;
+      --spin-duration: 8s;
+      --drift-x: -46px;
+      --trail-height: 102px;
+      --trail-width: 2px;
+      --trail-opacity: 0.29;
+      --trail-blur: 1px;
+    }
+
+    .d4 {
+      --fall-duration: 11.2s;
+      --twinkle-duration: 2.9s;
+      --spin-duration: 9s;
+      --drift-x: -38px;
+      --trail-height: 88px;
+      --trail-width: 2px;
+      --trail-opacity: 0.24;
+      --trail-blur: 1.1px;
+    }
+
+    .d5 {
+      --fall-duration: 12.1s;
+      --twinkle-duration: 3.1s;
+      --spin-duration: 10.2s;
+      --drift-x: -32px;
+      --trail-height: 76px;
+      --trail-width: 2px;
+      --trail-opacity: 0.20;
+      --trail-blur: 1.2px;
+    }
+
+    .d6 {
+      --fall-duration: 13.4s;
+      --twinkle-duration: 3.4s;
+      --spin-duration: 11.4s;
+      --drift-x: -26px;
+      --trail-height: 64px;
+      --trail-width: 1.5px;
+      --trail-opacity: 0.16;
+      --trail-blur: 1.3px;
+    }
+
     .b1  { left: 4%;  animation-delay: 0s, .2s; }
     .b2  { left: 11%; animation-delay: 1.6s, .9s; }
     .b3  { left: 19%; animation-delay: 3.7s, .4s; }
@@ -220,7 +274,6 @@
     .b10 { left: 84%; animation-delay: .3s, 1s; }
     .b11 { left: 91%; animation-delay: 4.9s, .4s; }
 
-    /* front positions */
     .f1  { left: 8%;  animation-delay: .7s, .2s; }
     .f2  { left: 17%; animation-delay: 2.4s, .9s; }
     .f3  { left: 25%; animation-delay: 5.2s, .4s; }
@@ -237,7 +290,7 @@
       border: 1px solid var(--line);
       border-radius: 30px;
       padding: 24px;
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(8px);
       position: relative;
       overflow: hidden;
       box-shadow: 0 22px 60px rgba(0,0,0,0.28);
@@ -260,8 +313,8 @@
       font-size: 22px;
       font-weight: 600;
       font-family: var(--font-en-body);
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
       width: fit-content;
       padding: 10px 14px;
       border-radius: 16px;
@@ -411,17 +464,17 @@
 
     @keyframes starFall {
       0% {
-        transform: translate3d(0, -16vh, 0) rotate(0deg) scale(.88);
+        transform: translate3d(0, -16vh, 0) scale(.88);
         opacity: 0;
       }
       8% {
         opacity: .98;
       }
       45% {
-        opacity: .9;
+        opacity: .88;
       }
       100% {
-        transform: translate3d(-46px, 120vh, 0) rotate(720deg) scale(1.08);
+        transform: translate3d(var(--drift-x), 120vh, 0) scale(1.08);
         opacity: 0;
       }
     }
@@ -431,25 +484,33 @@
         filter: brightness(1);
       }
       50% {
-        filter: brightness(1.72);
+        filter: brightness(1.65);
+      }
+    }
+
+    @keyframes starSpin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
       }
     }
   </style>
 </head>
 <body>
-  <!-- stars behind panels -->
   <div class="sparkle-rain-back" aria-hidden="true">
-    <span class="sparkle back big trail long-trail d2 b1"></span>
+    <span class="sparkle back big trail long-trail gold d1 b1"></span>
     <span class="sparkle back gold d4 b2"></span>
-    <span class="sparkle back small d1 b3"></span>
-    <span class="sparkle back big gold trail d5 b4"></span>
-    <span class="sparkle back d3 b5"></span>
-    <span class="sparkle back small gold d2 b6"></span>
-    <span class="sparkle back big trail d6 b7"></span>
-    <span class="sparkle back gold d1 b8"></span>
+    <span class="sparkle back small d6 b3"></span>
+    <span class="sparkle back big gold trail d2 b4"></span>
+    <span class="sparkle back d5 b5"></span>
+    <span class="sparkle back small gold d3 b6"></span>
+    <span class="sparkle back big trail d1 b7"></span>
+    <span class="sparkle back gold d6 b8"></span>
     <span class="sparkle back small d4 b9"></span>
-    <span class="sparkle back big gold trail long-trail d5 b10"></span>
-    <span class="sparkle back d2 b11"></span>
+    <span class="sparkle back big gold trail long-trail d2 b10"></span>
+    <span class="sparkle back d5 b11"></span>
   </div>
 
   <div class="layout">
@@ -487,18 +548,17 @@
     </section>
   </div>
 
-  <!-- stars in front of panels -->
   <div class="sparkle-rain-front" aria-hidden="true">
-    <span class="sparkle front big gold trail long-trail d3 f1"></span>
-    <span class="sparkle front d1 f2"></span>
-    <span class="sparkle front small gold trail d5 f3"></span>
+    <span class="sparkle front big gold trail long-trail d1 f1"></span>
+    <span class="sparkle front d5 f2"></span>
+    <span class="sparkle front small gold trail d2 f3"></span>
     <span class="sparkle front big d4 f4"></span>
-    <span class="sparkle front gold trail d2 f5"></span>
+    <span class="sparkle front gold trail d3 f5"></span>
     <span class="sparkle front big gold d6 f6"></span>
-    <span class="sparkle front small trail long-trail d3 f7"></span>
+    <span class="sparkle front small trail d1 f7"></span>
     <span class="sparkle front d5 f8"></span>
-    <span class="sparkle front big gold trail d1 f9"></span>
-    <span class="sparkle front small d4 f10"></span>
+    <span class="sparkle front big gold trail d2 f9"></span>
+    <span class="sparkle front small gold d4 f10"></span>
   </div>
 
   <script>
