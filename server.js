@@ -96,9 +96,9 @@ const data = (await readData()).filter(item => item.approved !== false);
 app.post('/api/entries', upload.single('photo'), async (req, res) => {
   const { name, ig, message } = req.body;
 
-  if (!name || !ig) {
-    return res.status(400).json({ error: 'Name and IG are required.' });
-  }
+if (!name) {
+  return res.status(400).json({ error: 'name is required' });
+}
 
 const normalizedIg = String(ig).trim().replace(/^@/, '').toLowerCase();
   const normalizedName = String(name).trim().toLowerCase();
