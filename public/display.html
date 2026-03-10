@@ -21,7 +21,7 @@
       --accent-2: #dbe8ff;
 
       --panel: rgba(255,255,255,0.025);
-      --line: rgba(255,255,255,0.006);
+      --line: rgba(255,255,255,0.06);
 
       --star-white: #ffffff;
       --star-ice: #dbe8ff;
@@ -81,7 +81,11 @@
     }
 
     .sparkle-rain-back { z-index: 1; }
-    .sparkle-rain-front { z-index: 7; }
+    .sparkle-rain-front {
+      z-index: 15;
+      perspective: 900px;
+      transform-style: preserve-3d;
+    }
 
     .layout {
       position: relative;
@@ -100,7 +104,7 @@
       --drift-x: -40px;
       --trail-height: 88px;
       --trail-width: 2px;
-      --trail-opacity: 0.28;
+      --trail-opacity: 0.20;
       --trail-blur: 1px;
 
       position: absolute;
@@ -146,64 +150,63 @@
 
     .sparkle.front::before {
       text-shadow:
-        0 0 12px rgba(255,255,255,1),
-        0 0 28px rgba(255,255,255,0.92),
-        0 0 52px rgba(219,232,255,0.82);
+        0 0 14px rgba(255,255,255,1),
+        0 0 30px rgba(255,255,255,0.92),
+        0 0 60px rgba(219,232,255,0.90);
     }
 
     .sparkle.front.gold::before {
       text-shadow:
-        0 0 12px rgba(255,231,168,1),
-        0 0 28px rgba(255,211,110,0.88),
-        0 0 52px rgba(255,211,110,0.68);
+        0 0 14px rgba(255,231,168,1),
+        0 0 30px rgba(255,211,110,0.90),
+        0 0 58px rgba(255,211,110,0.72);
     }
 
     .sparkle.back {
       filter: blur(0.2px);
-      opacity: 0.92;
+      opacity: 0.72;
     }
 
-    /* หางดาวแบบเนียนขึ้น */
-.sparkle.trail::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 52%;
-  width: var(--trail-width);
-  height: var(--trail-height);
-  transform: translateX(-50%);
-  transform-origin: bottom center;
-  border-radius: 999px;
-  opacity: var(--trail-opacity);
-  filter: blur(var(--trail-blur));
-  background: linear-gradient(
-    to top,
-    rgba(255,255,255,0.28) 0%,
-    rgba(255,255,255,0.16) 26%,
-    rgba(219,232,255,0.08) 58%,
-    rgba(219,232,255,0) 100%
-  );
-}
+    /* หางดาวอยู่เหนือดาว */
+    .sparkle.trail::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 52%;
+      width: var(--trail-width);
+      height: var(--trail-height);
+      transform: translateX(-50%);
+      transform-origin: bottom center;
+      border-radius: 999px;
+      opacity: var(--trail-opacity);
+      filter: blur(var(--trail-blur));
+      background: linear-gradient(
+        to top,
+        rgba(255,255,255,0.28) 0%,
+        rgba(255,255,255,0.16) 26%,
+        rgba(219,232,255,0.08) 58%,
+        rgba(219,232,255,0) 100%
+      );
+    }
 
-.sparkle.trail.gold::after {
-  background: linear-gradient(
-    to top,
-    rgba(255,231,168,0.24) 0%,
-    rgba(255,211,110,0.15) 28%,
-    rgba(255,211,110,0.07) 58%,
-    rgba(255,211,110,0) 100%
-  );
-}
+    .sparkle.trail.gold::after {
+      background: linear-gradient(
+        to top,
+        rgba(255,231,168,0.24) 0%,
+        rgba(255,211,110,0.15) 28%,
+        rgba(255,211,110,0.07) 58%,
+        rgba(255,211,110,0) 100%
+      );
+    }
 
-    /* speed presets = trail ไล่ตามความเร็ว */
     .d1 {
       --fall-duration: 8.6s;
       --twinkle-duration: 2.0s;
       --spin-duration: 6.5s;
       --drift-x: -60px;
-      --trail-height: 132px;
+      --trail-height: 118px;
       --trail-width: 3px;
-      --trail-opacity: 0.38;
+      --trail-opacity: 0.28;
       --trail-blur: 0.8px;
     }
 
@@ -212,9 +215,9 @@
       --twinkle-duration: 2.5s;
       --spin-duration: 7.2s;
       --drift-x: -52px;
-      --trail-height: 116px;
+      --trail-height: 102px;
       --trail-width: 2.5px;
-      --trail-opacity: 0.33;
+      --trail-opacity: 0.24;
       --trail-blur: 0.9px;
     }
 
@@ -223,9 +226,9 @@
       --twinkle-duration: 2.3s;
       --spin-duration: 8s;
       --drift-x: -46px;
-      --trail-height: 102px;
+      --trail-height: 90px;
       --trail-width: 2px;
-      --trail-opacity: 0.29;
+      --trail-opacity: 0.20;
       --trail-blur: 1px;
     }
 
@@ -234,9 +237,9 @@
       --twinkle-duration: 2.9s;
       --spin-duration: 9s;
       --drift-x: -38px;
-      --trail-height: 88px;
+      --trail-height: 78px;
       --trail-width: 2px;
-      --trail-opacity: 0.24;
+      --trail-opacity: 0.16;
       --trail-blur: 1.1px;
     }
 
@@ -245,9 +248,9 @@
       --twinkle-duration: 3.1s;
       --spin-duration: 10.2s;
       --drift-x: -32px;
-      --trail-height: 76px;
+      --trail-height: 66px;
       --trail-width: 2px;
-      --trail-opacity: 0.20;
+      --trail-opacity: 0.12;
       --trail-blur: 1.2px;
     }
 
@@ -256,23 +259,15 @@
       --twinkle-duration: 3.4s;
       --spin-duration: 11.4s;
       --drift-x: -26px;
-      --trail-height: 64px;
+      --trail-height: 56px;
       --trail-width: 1.5px;
-      --trail-opacity: 0.16;
+      --trail-opacity: 0.10;
       --trail-blur: 1.3px;
     }
 
-    .b1  { left: 4%;  animation-delay: 0s, .2s; }
-    .b2  { left: 11%; animation-delay: 1.6s, .9s; }
-    .b3  { left: 19%; animation-delay: 3.7s, .4s; }
-    .b4  { left: 27%; animation-delay: .8s, 1.1s; }
-    .b5  { left: 36%; animation-delay: 4.6s, .3s; }
-    .b6  { left: 46%; animation-delay: 2.1s, .8s; }
-    .b7  { left: 55%; animation-delay: 5.4s, .5s; }
-    .b8  { left: 65%; animation-delay: 1.4s, 1.2s; }
-    .b9  { left: 75%; animation-delay: 3.2s, .6s; }
-    .b10 { left: 84%; animation-delay: .3s, 1s; }
-    .b11 { left: 91%; animation-delay: 4.9s, .4s; }
+    .b1  { left: 12%; animation-delay: 1.6s, .9s; }
+    .b2  { left: 46%; animation-delay: 2.1s, .8s; }
+    .b3  { left: 78%; animation-delay: 3.2s, .6s; }
 
     .f1  { left: 8%;  animation-delay: .7s, .2s; }
     .f2  { left: 17%; animation-delay: 2.4s, .9s; }
@@ -313,8 +308,8 @@
       font-size: 22px;
       font-weight: 600;
       font-family: var(--font-en-body);
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.05);
       width: fit-content;
       padding: 10px 14px;
       border-radius: 16px;
@@ -500,17 +495,9 @@
 </head>
 <body>
   <div class="sparkle-rain-back" aria-hidden="true">
-    <span class="sparkle back big trail long-trail gold d1 b1"></span>
-    <span class="sparkle back gold d4 b2"></span>
-    <span class="sparkle back small d6 b3"></span>
-    <span class="sparkle back big gold trail d2 b4"></span>
-    <span class="sparkle back d5 b5"></span>
-    <span class="sparkle back small gold d3 b6"></span>
-    <span class="sparkle back big trail d1 b7"></span>
-    <span class="sparkle back gold d6 b8"></span>
-    <span class="sparkle back small d4 b9"></span>
-    <span class="sparkle back big gold trail long-trail d2 b10"></span>
-    <span class="sparkle back d5 b11"></span>
+    <span class="sparkle back small d6 b1"></span>
+    <span class="sparkle back d5 b2"></span>
+    <span class="sparkle back small gold d4 b3"></span>
   </div>
 
   <div class="layout">
@@ -549,7 +536,7 @@
   </div>
 
   <div class="sparkle-rain-front" aria-hidden="true">
-    <span class="sparkle front big gold trail long-trail d1 f1"></span>
+    <span class="sparkle front big gold trail d1 f1"></span>
     <span class="sparkle front d5 f2"></span>
     <span class="sparkle front small gold trail d2 f3"></span>
     <span class="sparkle front big d4 f4"></span>
