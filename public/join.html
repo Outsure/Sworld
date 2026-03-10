@@ -31,11 +31,10 @@
       --button-text: #002c67;
       --success-bg: rgba(255,255,255,0.15);
       --success-text: #ffffff;
-      --danger-bg: rgba(255, 120, 120, 0.14);
+      --danger-bg: rgba(255,120,120,0.14);
       --danger-text: #ffc8c8;
 
       --star-white: #ffffff;
-      --star-ice: #dbe8ff;
       --star-gold: #ffe7a8;
     }
 
@@ -66,7 +65,7 @@
       color: var(--text);
       background:
         linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
-        url('/sworld-stage.jpg') center/cover no-repeat fixed;
+        url('/sworld-stage.jpg') center/cover no-repeat;
       padding:
         max(18px, env(safe-area-inset-top))
         16px
@@ -290,20 +289,18 @@
     .f7  { left: 82%; animation-delay: 5.2s, .5s; }
     .f8  { left: 90%; animation-delay: 2.8s, 1.2s; }
 
-.page {
-  min-height: auto;
-  display: block;
-  position: relative;
-  z-index: 3;
-}
+    .page {
+      min-height: auto;
+      display: block;
+      position: relative;
+      z-index: 3;
+    }
 
     .wrap {
       width: 100%;
       max-width: 580px;
       background: var(--panel);
       border: 1px solid var(--line);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       border-radius: 30px;
       padding: 28px;
       box-shadow: 0 30px 90px rgba(0,0,0,0.45);
@@ -430,7 +427,7 @@
 
     input::placeholder,
     textarea::placeholder {
-      color: rgba(233, 240, 255, 0.4);
+      color: rgba(233,240,255,0.4);
       font-family: var(--font-th), var(--font-en-body), sans-serif;
     }
 
@@ -445,9 +442,31 @@
       resize: vertical;
     }
 
+    .file-input {
+      padding: 12px;
+      min-height: 54px;
+    }
+
+    .file-meta {
+      display: none;
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--sub);
+      font-size: 13px;
+      line-height: 1.5;
+      font-family: var(--font-en-body);
+    }
+
+    .file-meta.show {
+      display: block;
+    }
+
     .progress-wrap {
       display: none;
-      margin-top: 4px;
+      margin-top: 8px;
       gap: 8px;
     }
 
@@ -492,7 +511,7 @@
       color: var(--button-text);
       cursor: pointer;
       margin-top: 8px;
-      box-shadow: 0 14px 34px rgba(82, 126, 214, 0.22);
+      box-shadow: 0 14px 34px rgba(82,126,214,0.22);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -587,149 +606,6 @@
         0 0 20px rgba(255,211,110,0.8);
     }
 
-    .upload-field {
-      display: grid;
-      gap: 10px;
-    }
-
-    .upload-label {
-      display: block;
-      font-size: 15px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.92);
-      margin: 0;
-    }
-
-  .upload-card {
-    border: 1px solid rgba(255,255,255,0.14);
-    background: rgba(255,255,255,0.035);
-    border-radius: 18px;
-    padding: 16px;
-    display: grid;
-    gap: 14px;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    transition: border-color .25s ease, background .25s ease, transform .25s ease;
-    overflow: hidden;
-}
-
-    .upload-card:hover {
-      border-color: rgba(255,255,255,0.28);
-      background: rgba(255,255,255,0.09);
-    }
-
-    .upload-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .upload-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      color: #fff;
-      background: linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
-      flex-shrink: 0;
-    }
-
-    .upload-text {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .upload-title {
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .upload-sub {
-      color: rgba(255,255,255,0.72);
-      font-size: 14px;
-      margin-top: 4px;
-      word-break: break-word;
-      line-height: 1.45;
-    }
-
-    .upload-buttons {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .upload-btn,
-    .remove-btn {
-      appearance: none;
-      border: 0;
-      border-radius: 12px;
-      padding: 11px 16px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform .18s ease, opacity .18s ease, background .18s ease;
-      min-height: 46px;
-    }
-
-    .upload-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffffff;
-      color: #002c67;
-      width: auto;
-      box-shadow: none;
-      margin: 0;
-    }
-
-    .remove-btn {
-      background: rgba(255,255,255,0.12);
-      color: #ffffff;
-      border: 1px solid rgba(255,255,255,0.16);
-      width: auto;
-      box-shadow: none;
-      margin: 0;
-    }
-
-    .upload-btn:hover,
-    .remove-btn:hover {
-      transform: translateY(-1px);
-      opacity: .95;
-    }
-
-    .upload-preview {
-      display: none;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.14);
-      margin-top: 2px;
-    }
-
-    .upload-preview.show {
-      display: block;
-    }
-
-    .upload-preview img {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-height: 220px;
-      object-fit: contain;
-      background: rgba(255,255,255,0.03);
-    }
-
-    .upload-card.has-file {
-      border-color: rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.05);
-    }
-
     @keyframes starFall {
       0% {
         transform: translate3d(0, -16vh, 0) scale(.88);
@@ -798,59 +674,17 @@
       to { transform: rotate(360deg); }
     }
 
-@media (max-width: 640px) {
-    * {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-  body {
-    padding:
-      max(12px, env(safe-area-inset-top))
-      12px
-      max(18px, env(safe-area-inset-bottom))
-      12px;
-    background:
-      linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
-      url('/sworld-stage.jpg') center/cover no-repeat;
-  }
-  body::before,
-body::after {
-  display: none;
-}
-.wrap::before,
-.wrap::after {
-  display: none;
-}
-  .wrap,
-.upload-card,
-.note,
-#submitBtn,
-.ok,
-.err {
-  background: transparent !important;
-}
-  .wrap,
-.upload-card {
-  box-shadow: none !important;
-}
-    .wrap {
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.22);
-    isolation: isolate;
-  }
-
-  .upload-card {
-    background: rgba(255,255,255,0.025);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .upload-card.has-file {
-    background: rgba(255,255,255,0.04);
-  }
-}
+    @media (max-width: 640px) {
+      body {
+        padding:
+          max(12px, env(safe-area-inset-top))
+          12px
+          max(18px, env(safe-area-inset-bottom))
+          12px;
+        background:
+          linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
+          url('/sworld-stage.jpg') center/cover no-repeat;
+      }
 
       .page {
         min-height: auto;
@@ -874,6 +708,7 @@ body::after {
 
       input,
       textarea,
+      .file-input,
       button {
         font-size: 16px;
       }
@@ -893,24 +728,6 @@ body::after {
 
       .sparkle.small::before {
         font-size: 14px;
-      }
-
-      .upload-card {
-        padding: 14px;
-      }
-
-      .upload-buttons {
-        display: grid;
-        grid-template-columns: 1fr;
-      }
-
-      .upload-btn,
-      .remove-btn {
-        width: 100%;
-      }
-
-      .upload-preview img {
-        max-height: 180px;
       }
     }
   </style>
@@ -961,45 +778,17 @@ body::after {
           ></textarea>
         </label>
 
-        <div class="upload-field">
-          <label class="upload-label">Upload photo</label>
-
+        <label>
+          Upload photo
           <input
             id="photoInput"
+            class="file-input"
             type="file"
             name="photo"
             accept="image/*"
-            hidden
           />
-
-          <div class="upload-card" id="uploadCard">
-            <div class="upload-row">
-              <div class="upload-icon">✦</div>
-
-              <div class="upload-text">
-                <div class="upload-title">Upload your photo</div>
-                <div class="upload-sub" id="fileMeta">ยังไม่ได้ใส่รูปเลย</div>
-              </div>
-            </div>
-
-            <div class="upload-buttons">
-              <label for="photoInput" class="upload-btn">Choose file</label>
-
-              <button
-                type="button"
-                class="remove-btn"
-                id="removePhoto"
-                hidden
-              >
-                Remove
-              </button>
-            </div>
-
-            <div class="upload-preview" id="previewBox">
-              <img id="previewImage" alt="Preview image" />
-            </div>
-          </div>
-        </div>
+          <div id="fileMeta" class="file-meta"></div>
+        </label>
 
         <div id="progressWrap" class="progress-wrap" aria-live="polite">
           <div class="progress-label">
@@ -1051,10 +840,6 @@ body::after {
 
     const photoInput = document.getElementById('photoInput');
     const fileMeta = document.getElementById('fileMeta');
-    const previewBox = document.getElementById('previewBox');
-    const previewImage = document.getElementById('previewImage');
-    const removePhoto = document.getElementById('removePhoto');
-    const uploadCard = document.getElementById('uploadCard');
 
     const progressWrap = document.getElementById('progressWrap');
     const progressText = document.getElementById('progressText');
@@ -1067,7 +852,6 @@ body::after {
 
     let isSubmitting = false;
     let compressedFile = null;
-    let currentPreviewUrl = '';
 
     function bytesToMB(bytes) {
       return (bytes / (1024 * 1024)).toFixed(2);
@@ -1105,6 +889,17 @@ body::after {
       progressText.textContent = 'Preparing upload...';
     }
 
+    function updateFileMeta(message) {
+      if (!message) {
+        fileMeta.classList.remove('show');
+        fileMeta.textContent = '';
+        return;
+      }
+
+      fileMeta.textContent = message;
+      fileMeta.classList.add('show');
+    }
+
     function normalizeIgValue(value) {
       return String(value || '').trim().replace(/^@+/, '');
     }
@@ -1114,57 +909,12 @@ body::after {
       const ig = normalizeIgValue(igInput.value);
       const message = String(messageInput.value || '').trim();
 
-      if (!name) {
-        throw new Error('Please enter your name');
-      }
-
-      if (name.length > 60) {
-        throw new Error('Name is too long');
-      }
-
-      if (ig.length > 60) {
-        throw new Error('IG name is too long');
-      }
-
-      if (message.length > 250) {
-        throw new Error('Message is too long');
-      }
+      if (!name) throw new Error('Please enter your name');
+      if (name.length > 60) throw new Error('Name is too long');
+      if (ig.length > 60) throw new Error('IG name is too long');
+      if (message.length > 250) throw new Error('Message is too long');
 
       return { name, ig, message };
-    }
-
-    function resetPhotoUI() {
-      if (currentPreviewUrl) {
-        URL.revokeObjectURL(currentPreviewUrl);
-        currentPreviewUrl = '';
-      }
-
-      photoInput.value = '';
-      fileMeta.textContent = 'ยังไม่ได้ใส่รูปเลย';
-      previewImage.removeAttribute('src');
-      previewBox.classList.remove('show');
-      removePhoto.hidden = true;
-      uploadCard.classList.remove('has-file');
-      compressedFile = null;
-    }
-
-    function showPreviewFromFile(file) {
-      if (!file) {
-        previewImage.removeAttribute('src');
-        previewBox.classList.remove('show');
-        return;
-      }
-
-      if (currentPreviewUrl) {
-        URL.revokeObjectURL(currentPreviewUrl);
-        currentPreviewUrl = '';
-      }
-
-      currentPreviewUrl = URL.createObjectURL(file);
-      previewImage.src = currentPreviewUrl;
-      previewBox.classList.add('show');
-      removePhoto.hidden = false;
-      uploadCard.classList.add('has-file');
     }
 
     async function compressImage(file) {
@@ -1183,7 +933,6 @@ body::after {
             const maxHeight = 2000;
 
             let { width, height } = img;
-
             const widthRatio = maxWidth / width;
             const heightRatio = maxHeight / height;
             const scale = Math.min(1, widthRatio, heightRatio);
@@ -1203,20 +952,16 @@ body::after {
 
             ctx.drawImage(img, 0, 0, width, height);
 
-            canvas.toBlob(
-              (blob) => {
-                if (!blob) {
-                  reject(new Error('ไม่สามารถย่อรูปได้'));
-                  return;
-                }
+            canvas.toBlob((blob) => {
+              if (!blob) {
+                reject(new Error('ไม่สามารถย่อรูปได้'));
+                return;
+              }
 
-                const safeName = (file.name || 'upload').replace(/\.[^.]+$/, '') + '.jpg';
-                const newFile = new File([blob], safeName, { type: 'image/jpeg' });
-                resolve(newFile);
-              },
-              'image/jpeg',
-              0.82
-            );
+              const safeName = (file.name || 'upload').replace(/\.[^.]+$/, '') + '.jpg';
+              const newFile = new File([blob], safeName, { type: 'image/jpeg' });
+              resolve(newFile);
+            }, 'image/jpeg', 0.82);
           };
 
           img.onerror = () => reject(new Error('ไฟล์รูปไม่ถูกต้อง'));
@@ -1231,7 +976,6 @@ body::after {
     function sparkleBurst(x, y) {
       const burst = document.createElement('div');
       burst.className = 'burst';
-
       document.body.appendChild(burst);
 
       for (let i = 0; i < 16; i++) {
@@ -1242,7 +986,6 @@ body::after {
 
         const angle = Math.random() * Math.PI * 2;
         const dist = 80 + Math.random() * 120;
-
         const tx = Math.cos(angle) * dist + 'px';
         const ty = Math.sin(angle) * dist + 'px';
 
@@ -1256,6 +999,41 @@ body::after {
 
       setTimeout(() => burst.remove(), 900);
     }
+
+    photoInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      compressedFile = null;
+      hideMessages();
+
+      if (!file) {
+        updateFileMeta('');
+        return;
+      }
+
+      try {
+        setProgress(5, 'Preparing image...');
+        setSubmitState(true, 'Preparing image...');
+
+        const originalSize = bytesToMB(file.size);
+        compressedFile = await compressImage(file);
+        const compressedSize = bytesToMB(compressedFile.size);
+
+        updateFileMeta(`Ready: ${file.name} • ${originalSize} MB → ${compressedSize} MB`);
+        setProgress(100, 'Image ready');
+      } catch (error) {
+        photoInput.value = '';
+        compressedFile = null;
+        updateFileMeta('');
+        showError(error.message || 'ไม่สามารถย่อรูปได้ กรุณาลองใหม่');
+      } finally {
+        setTimeout(() => {
+          if (!isSubmitting) {
+            hideProgress();
+            setSubmitState(false, 'Join to Sworld');
+          }
+        }, 400);
+      }
+    });
 
     function uploadWithProgress(formData) {
       return new Promise((resolve, reject) => {
@@ -1288,48 +1066,6 @@ body::after {
       });
     }
 
-    photoInput.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      compressedFile = null;
-      hideMessages();
-
-      if (!file) {
-        resetPhotoUI();
-        return;
-      }
-
-      showPreviewFromFile(file);
-
-      try {
-        setProgress(5, 'Preparing image...');
-        setSubmitState(true, 'Preparing image...');
-
-        const originalSize = bytesToMB(file.size);
-        compressedFile = await compressImage(file);
-
-        const compressedSize = bytesToMB(compressedFile.size);
-        fileMeta.textContent = `Ready: ${file.name} • ${originalSize} MB → ${compressedSize} MB`;
-        setProgress(100, 'Image ready');
-      } catch (error) {
-        resetPhotoUI();
-        showError(error.message || 'ไม่สามารถย่อรูปได้ กรุณาลองใหม่');
-      } finally {
-        setTimeout(() => {
-          if (!isSubmitting) {
-            hideProgress();
-            setSubmitState(false, 'Join to Sworld');
-          }
-        }, 400);
-      }
-    });
-
-    removePhoto.addEventListener('click', () => {
-      resetPhotoUI();
-      hideMessages();
-      hideProgress();
-      setSubmitState(false, 'Join to Sworld');
-    });
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       hideMessages();
@@ -1349,7 +1085,6 @@ body::after {
 
       try {
         const formData = new FormData(form);
-
         const normalizedIg = normalizeIgValue(igInput.value);
         formData.set('ig', normalizedIg || '');
 
@@ -1369,8 +1104,9 @@ body::after {
             compressedFile = await compressImage(rawFile);
             formData.set('photo', compressedFile);
 
-            fileMeta.textContent =
-              `Ready: ${rawFile.name} • ${bytesToMB(rawFile.size)} MB → ${bytesToMB(compressedFile.size)} MB`;
+            updateFileMeta(
+              `Ready: ${rawFile.name} • ${bytesToMB(rawFile.size)} MB → ${bytesToMB(compressedFile.size)} MB`
+            );
           }
         }
 
@@ -1384,7 +1120,8 @@ body::after {
         sparkleBurst(window.innerWidth / 2, window.innerHeight / 2);
 
         form.reset();
-        resetPhotoUI();
+        compressedFile = null;
+        updateFileMeta('');
       } catch (error) {
         showError(error.message || 'Submit failed');
       } finally {
