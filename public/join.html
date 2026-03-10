@@ -809,9 +809,14 @@
       linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
       url('/sworld-stage.jpg') center/cover no-repeat;
   }
-  .wrap::before {
-    display: none;
-  }
+  body::before,
+body::after {
+  display: none;
+}
+.wrap::before,
+.wrap::after {
+  display: none;
+}
   .upload-card {
     background: rgba(255,255,255,0.025);
     backdrop-filter: none;
