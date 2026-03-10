@@ -881,11 +881,26 @@
     uploadCard.classList.remove('has-file');
   }
 
-  function updatePhotoUI(file) {
-    if (!file) {
-      resetPhotoUI();
-      return;
-    }
+function updatePhotoUI(file) {
+  if (!file) {
+    resetPhotoUI();
+    return;
+  }
+
+  fileMeta.textContent =
+    file.name + " • " + (file.size / 1024 / 1024).toFixed(2) + " MB";
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    previewImage.src = e.target.result;
+    previewBox.hidden = false;
+    removePhoto.hidden = false;
+    uploadCard.classList.add("has-file");
+  };
+
+  reader.readAsDataURL(file);
+}
 
     if (currentPreviewUrl) {
       URL.revokeObjectURL(currentPreviewUrl);
