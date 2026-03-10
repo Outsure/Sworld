@@ -345,7 +345,231 @@
       line-height: 1.5;
       font-family: var(--font-en-body);
     }
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
 
+    .star {
+      position: absolute;
+      display: block;
+      opacity: 0;
+      will-change: transform, opacity, filter;
+      animation:
+        twinkle 4.6s ease-in-out infinite,
+        floatStar 9s ease-in-out infinite;
+    }
+
+    .star::before,
+    .star::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.96);
+    }
+
+    .star::before {
+      width: 2px;
+      height: 100%;
+      box-shadow:
+        0 0 8px rgba(255,255,255,0.55),
+        0 0 18px rgba(219,232,255,0.35);
+    }
+
+    .star::after {
+      width: 100%;
+      height: 2px;
+      box-shadow:
+        0 0 8px rgba(255,255,255,0.55),
+        0 0 18px rgba(219,232,255,0.35);
+    }
+
+    .star.sm {
+      width: 8px;
+      height: 8px;
+    }
+
+    .star.md {
+      width: 12px;
+      height: 12px;
+    }
+
+    .star.xl {
+      width: 18px;
+      height: 18px;
+    }
+
+    .star.xl::before {
+      width: 2.5px;
+      height: 100%;
+    }
+
+    .star.xl::after {
+      width: 100%;
+      height: 2.5px;
+    }
+
+    .star.glow {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.13) 0%, rgba(219,232,255,0.08) 28%, transparent 72%);
+      filter: blur(2px);
+      animation:
+        glowPulse 7s ease-in-out infinite,
+        floatGlow 16s ease-in-out infinite;
+    }
+
+    .star.glow::before,
+    .star.glow::after {
+      display: none;
+    }
+
+    .s1  { top: 8%;  left: 8%;  animation-delay: 0s, 0.4s; }
+    .s2  { top: 12%; left: 24%; animation-delay: 1.4s, 1.2s; }
+    .s3  { top: 9%;  left: 42%; animation-delay: 2.2s, 0.8s; }
+    .s4  { top: 16%; left: 60%; animation-delay: 0.7s, 1.7s; }
+    .s5  { top: 10%; left: 83%; animation-delay: 2.8s, 0.2s; }
+
+    .s6  { top: 28%; left: 14%; animation-delay: 1.2s, 2.1s; }
+    .s7  { top: 32%; left: 74%; animation-delay: 3.2s, 1s; }
+    .s8  { top: 42%; left: 10%; animation-delay: 0.4s, 1.5s; }
+    .s9  { top: 46%; left: 88%; animation-delay: 2.5s, 0.6s; }
+
+    .s10 { top: 58%; left: 22%; animation-delay: 1.8s, 1.8s; }
+    .s11 { top: 62%; left: 48%; animation-delay: 3.1s, 0.9s; }
+    .s12 { top: 66%; left: 76%; animation-delay: 0.9s, 2.5s; }
+
+    .s13 { top: 78%; left: 12%; animation-delay: 2.7s, 1.1s; }
+    .s14 { top: 82%; left: 58%; animation-delay: 1.1s, 2s; }
+    .s15 { top: 86%; left: 84%; animation-delay: 3.4s, 0.7s; }
+    .s16 { top: 72%; left: 92%; animation-delay: 0.5s, 1.4s; }
+
+    .g1 { top: 6%; left: 70%; animation-delay: 0s, 0s; }
+    .g2 { top: 34%; left: 4%; animation-delay: 2s, 1.2s; }
+    .g3 { top: 74%; left: 78%; animation-delay: 4s, 2.4s; }
+
+    .s1, .s5, .s9, .s14 {
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.38));
+    }
+
+    .s2, .s4, .s7, .s10, .s12, .s15 {
+      filter: drop-shadow(0 0 7px rgba(219,232,255,0.28));
+    }
+
+    .page,
+    .wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    .wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0.015) 24%,
+        transparent 55%
+      );
+    }
+
+    .wrap::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      pointer-events: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 0 40px rgba(148,189,255,0.08);
+    }
+
+    .brand img {
+      animation: logoFloat 5.5s ease-in-out infinite;
+    }
+
+    h1 {
+      text-shadow:
+        0 0 12px rgba(255,255,255,0.10),
+        0 0 30px rgba(219,232,255,0.10);
+      animation: titleGlow 5.2s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0.16;
+        transform: scale(0.92);
+        filter: brightness(0.95);
+      }
+      20% {
+        opacity: 0.42;
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.16);
+        filter: brightness(1.35);
+      }
+      75% {
+        opacity: 0.5;
+      }
+    }
+
+    @keyframes floatStar {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+      }
+      50% {
+        transform: translateY(-8px) translateX(2px);
+      }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        opacity: 0.18;
+        transform: scale(0.95);
+      }
+      50% {
+        opacity: 0.42;
+        transform: scale(1.08);
+      }
+    }
+
+    @keyframes floatGlow {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+      }
+      50% {
+        transform: translateY(-12px) translateX(8px);
+      }
+    }
+
+    @keyframes logoFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    @keyframes titleGlow {
+      0%, 100% {
+        opacity: 0.96;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -393,9 +617,51 @@
         font-size: 15px;
       }
     }
+        @media (max-width: 640px) {
+      .star.glow {
+        width: 84px;
+        height: 84px;
+      }
+
+      .star.xl {
+        width: 14px;
+        height: 14px;
+      }
+
+      .star.md {
+        width: 10px;
+        height: 10px;
+      }
+
+      .star.sm {
+        width: 7px;
+        height: 7px;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="stars" aria-hidden="true">
+    <span class="star xl s1"></span>
+    <span class="star md s2"></span>
+    <span class="star sm s3"></span>
+    <span class="star md s4"></span>
+    <span class="star xl s5"></span>
+    <span class="star sm s6"></span>
+    <span class="star md s7"></span>
+    <span class="star sm s8"></span>
+    <span class="star xl s9"></span>
+    <span class="star md s10"></span>
+    <span class="star sm s11"></span>
+    <span class="star md s12"></span>
+    <span class="star sm s13"></span>
+    <span class="star xl s14"></span>
+    <span class="star md s15"></span>
+    <span class="star sm s16"></span>
+    <span class="star glow g1"></span>
+    <span class="star glow g2"></span>
+    <span class="star glow g3"></span>
+  </div>
   <div class="page">
     <div class="wrap">
       <div class="brand">
@@ -417,7 +683,7 @@
 
         <label>
           IG Name (*Optional)
-          <input id="igInput" name="ig" placeholder="e.g. Sworld_ig" required maxlength="60" />
+          <input id="igInput" name="ig" placeholder="e.g. Sworld_ig" maxlength="60" />
         </label>
 
         <label>
@@ -548,10 +814,6 @@
         throw new Error('Please enter your name');
       }
 
-      if (!ig) {
-        throw new Error('Please enter your IG name');
-      }
-
       if (name.length > 60) {
         throw new Error('Name is too long');
       }
@@ -657,7 +919,7 @@
         setTimeout(() => {
           if (!isSubmitting) {
             hideProgress();
-            setSubmitState(false, 'Join Sworld Wall');
+            setSubmitState(false, 'Join to Sworld');
           }
         }, 400);
       }
@@ -756,7 +1018,7 @@
 
         setTimeout(() => {
           hideProgress();
-          setSubmitState(false, 'Join Sworld Wall');
+          setSubmitState(false, 'Join to Sworld');
         }, 600);
       }
     });
