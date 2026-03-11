@@ -308,66 +308,67 @@
   <div class="pill">Portal auto-refreshes every 20 seconds</div>
 </div>
 
-<div style="margin-top:12px">
-<button onclick="downloadCSV()">Download CSV</button>
-<button onclick="downloadPhotosZIP()">Download Photos ZIP</button>
+<div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+  <button onclick="downloadCSV()">Download CSV</button>
+  <button onclick="downloadPhotosZIP()">Download Photos ZIP</button>
 </div>
     </div>
 
     <div id="list"></div>
   </div>
 
-  <script>
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
+<script>
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
-    async function load() {
-      const res = await fetch('/api/entries', { cache: 'no-store' });
-      const items = await res.json();
-      const list = document.getElementById('list');
-      document.getElementById('countPill').textContent = `${items.length} profiles`;
+async function load() {
+  const res = await fetch('/api/entries', { cache: 'no-store' });
+  const items = await res.json();
+  const list = document.getElementById('list');
+  document.getElementById('countPill').textContent = `${items.length} profiles`;
 
-      if (!items.length) {
-        list.innerHTML = '<div class="empty">No profiles yet. Guest submissions will appear here automatically.</div>';
-        return;
-      }
-
-      list.innerHTML = items.map((item, idx) => `
-        <div class="card">
-          <img class="preview" src="${escapeHtml(item.photo || '/default-avatar.png')}" alt="${escapeHtml(item.name || 'Guest')}" />
-          <div class="meta">
-            <div class="name">
-              ${escapeHtml(item.name || 'Guest')}
-              <span class="tag">— @${escapeHtml(item.ig || 'guest')}</span>
-            </div>
-            <div class="message">${escapeHtml(item.message || 'No message added')}</div>
-            <div class="hint">Display order slot: ${idx + 1}</div>
-          </div>
-          <button onclick="removeItem('${escapeHtml(item.id)}')">Delete</button>
-        </div>
-      `).join('');
-    }
-
-    async function removeItem(id) {
-      await fetch('/api/entries/' + encodeURIComponent(id), { method: 'DELETE' });
-      load();
-    }
-
-    load();
-    setInterval(load, 20000);
-    
-      function downloadCSV() {
-    window.location.href = '/api/export/csv';
+  if (!items.length) {
+    list.innerHTML = '<div class="empty">No profiles yet. Guest submissions will appear here automatically.</div>';
+    return;
   }
-    function downloadPhotosZIP() {
+
+  list.innerHTML = items.map((item, idx) => `
+    <div class="card">
+      <img class="preview" src="${escapeHtml(item.photo || '/default-avatar.png')}" alt="${escapeHtml(item.name || 'Guest')}" />
+      <div class="meta">
+        <div class="name">
+          ${escapeHtml(item.name || 'Guest')}
+          <span class="tag">— @${escapeHtml(item.ig || 'guest')}</span>
+        </div>
+        <div class="message">${escapeHtml(item.message || 'No message added')}</div>
+        <div class="hint">Display order slot: ${idx + 1}</div>
+      </div>
+      <button onclick="removeItem('${escapeHtml(item.id)}')">Delete</button>
+    </div>
+  `).join('');
+}
+
+async function removeItem(id) {
+  await fetch('/api/entries/' + encodeURIComponent(id), { method: 'DELETE' });
+  load();
+}
+
+load();
+setInterval(load, 20000);
+
+function downloadCSV() {
+  window.location.href = '/api/export/csv';
+}
+
+function downloadPhotosZIP() {
   window.location.href = '/api/export/photos';
 }
-  </script>
+</script>
 </body>
 </html>
