@@ -238,6 +238,9 @@
       font-family: var(--font-th);
       position: relative;
       z-index: 4;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      min-height: 120px;
     }
 
     .qr-header {
@@ -746,13 +749,13 @@
       name.textContent = cleanName ? 'Guest : ' + cleanName : 'Guest';
 
       const cleanIg = safeText(item.ig, '').replace(/^@/, '');
-      ig.textContent = cleanIg ? 'Follow IG' + cleanIg : '';
+      ig.textContent = cleanIg ? 'Follow IG : ' + cleanIg : '';
 
       message.textContent = safeText(
         item.message,
         'Happy to celebrate with the couple tonight ✨'
       );
-
+         autoShrinkText(message);
       if (currentPhotoSrc !== nextPhotoSrc) {
         photo.src = nextPhotoSrc;
         currentPhotoSrc = nextPhotoSrc;
@@ -861,7 +864,17 @@
         currentPhotoSrc = fallback;
       }
     });
+    function autoShrinkText(el) {
+      let size = 30;
+      const min = 16;
 
+      el.style.fontSize = size + 'px';
+
+    while (el.scrollHeight > el.clientHeight && size > min) {
+      size--;
+      el.style.fontSize = size + 'px';
+  }
+}
     init();
   </script>
 </body>
