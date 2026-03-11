@@ -745,7 +745,7 @@
       name.textContent = safeText(item.name, 'Guest');
 
       const cleanIg = safeText(item.ig, '').replace(/^@/, '');
-      ig.textContent = cleanIg ? '@' + cleanIg : '';
+      ig.textContent = cleanIg ? 'Follow IG' + cleanIg : '';
 
       message.textContent = safeText(
         item.message,
