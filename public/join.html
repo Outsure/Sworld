@@ -64,9 +64,9 @@
       min-height: 100%;
       font-family: var(--font-th), var(--font-en-body), sans-serif;
       color: var(--text);
-    background:
-      linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
-      url('/sworld-stage.jpg') center/cover no-repeat;
+      background:
+        linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
+        url('/sworld-stage.jpg') center/cover no-repeat fixed;
       padding:
         max(18px, env(safe-area-inset-top))
         16px
@@ -291,7 +291,7 @@
     .f8  { left: 90%; animation-delay: 2.8s, 1.2s; }
 
     .page {
-       min-height: 100vh;
+      min-height: calc(100vh - 32px);
       display: grid;
       place-items: center;
       position: relative;
@@ -303,8 +303,8 @@
       max-width: 580px;
       background: var(--panel);
       border: 1px solid var(--line);
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-radius: 30px;
       padding: 28px;
       box-shadow: 0 30px 90px rgba(0,0,0,0.45);
@@ -442,6 +442,42 @@
     textarea {
       min-height: 110px;
       resize: vertical;
+    }
+
+    .progress-wrap {
+      display: none;
+      margin-top: 4px;
+      gap: 8px;
+    }
+
+    .progress-wrap.show {
+      display: grid;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      color: var(--sub);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--font-en-body);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #ffffff, #dbe8ff);
+      transition: width .18s ease;
     }
 
     button {
@@ -920,6 +956,16 @@
           </div>
         </div>
 
+        <div id="progressWrap" class="progress-wrap" aria-live="polite">
+          <div class="progress-label">
+            <span id="progressText">Preparing upload...</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+        </div>
+
         <button type="submit" id="submitBtn">
           <span id="submitText">Join to Sworld</span>
           <span id="submitLoader" class="loader"></span>
@@ -965,6 +1011,11 @@
     const removePhoto = document.getElementById('removePhoto');
     const uploadCard = document.getElementById('uploadCard');
 
+    const progressWrap = document.getElementById('progressWrap');
+    const progressText = document.getElementById('progressText');
+    const progressPercent = document.getElementById('progressPercent');
+    const progressFill = document.getElementById('progressFill');
+
     const nameInput = document.getElementById('nameInput');
     const igInput = document.getElementById('igInput');
     const messageInput = document.getElementById('message');
@@ -992,6 +1043,21 @@
       submitBtn.disabled = loading;
       submitText.textContent = text;
       submitLoader.classList.toggle('show', loading);
+    }
+
+    function setProgress(percent, text) {
+      const safePercent = Math.max(0, Math.min(100, Math.round(percent || 0)));
+      progressWrap.classList.add('show');
+      progressFill.style.width = `${safePercent}%`;
+      progressPercent.textContent = `${safePercent}%`;
+      progressText.textContent = text || 'Uploading...';
+    }
+
+    function hideProgress() {
+      progressWrap.classList.remove('show');
+      progressFill.style.width = '0%';
+      progressPercent.textContent = '0%';
+      progressText.textContent = 'Preparing upload...';
     }
 
     function normalizeIgValue(value) {
@@ -1151,7 +1217,13 @@
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/entries');
 
-        xhr.upload.onprogress = () => {};
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            setProgress(percent, percent < 100 ? 'Uploading...' : 'Processing...');
+            submitText.textContent = `Uploading ${percent}%`;
+          }
+        };
 
         xhr.onload = () => {
           let data = {};
@@ -1184,6 +1256,7 @@
       showPreviewFromFile(file);
 
       try {
+        setProgress(5, 'Preparing image...');
         setSubmitState(true, 'Preparing image...');
 
         const originalSize = bytesToMB(file.size);
@@ -1191,11 +1264,17 @@
 
         const compressedSize = bytesToMB(compressedFile.size);
         fileMeta.textContent = `Ready: ${file.name} • ${originalSize} MB → ${compressedSize} MB`;
-  
+        setProgress(100, 'Image ready');
       } catch (error) {
         resetPhotoUI();
         showError(error.message || 'ไม่สามารถย่อรูปได้ กรุณาลองใหม่');
       } finally {
+        setTimeout(() => {
+          if (!isSubmitting) {
+            hideProgress();
+            setSubmitState(false, 'Join to Sworld');
+          }
+        }, 400);
       }
     });
 
@@ -1221,6 +1300,7 @@
 
       isSubmitting = true;
       setSubmitState(true, 'Preparing...');
+      setProgress(0, 'Preparing upload...');
 
       try {
         const formData = new FormData(form);
@@ -1233,6 +1313,7 @@
         } else {
           const rawFile = photoInput.files[0];
           if (rawFile) {
+            setProgress(10, 'Preparing image...');
             submitText.textContent = 'Preparing image...';
 
             const originalSizeMB = parseFloat(bytesToMB(rawFile.size));
@@ -1248,9 +1329,10 @@
           }
         }
 
-        submitText.textContent = 'Uploading...';
+        submitText.textContent = 'Uploading 0%';
         await uploadWithProgress(formData);
 
+        setProgress(100, 'Done');
         submitText.textContent = 'Submitted';
         okBox.style.display = 'block';
 
@@ -1262,6 +1344,11 @@
         showError(error.message || 'Submit failed');
       } finally {
         isSubmitting = false;
+
+        setTimeout(() => {
+          hideProgress();
+          setSubmitState(false, 'Join to Sworld');
+        }, 600);
       }
     });
 
