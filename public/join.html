@@ -1196,12 +1196,6 @@
         resetPhotoUI();
         showError(error.message || 'ไม่สามารถย่อรูปได้ กรุณาลองใหม่');
       } finally {
-        setTimeout(() => {
-          if (!isSubmitting) {
-            hideProgress();
-            setSubmitState(false, 'Join to Sworld');
-          }
-        }, 400);
       }
     });
 
@@ -1254,7 +1248,7 @@
           }
         }
 
-        submitText.textContent = 'Uploading 0%';
+        submitText.textContent = 'Uploading...';
         await uploadWithProgress(formData);
 
         submitText.textContent = 'Submitted';
@@ -1268,10 +1262,6 @@
         showError(error.message || 'Submit failed');
       } finally {
         isSubmitting = false;
-
-        setTimeout(() => {
-          setSubmitState(false, 'Join to Sworld');
-        }, 600);
       }
     });
 
