@@ -225,24 +225,24 @@
       z-index: 4;
     }
 
-    .msg {
-      font-size: clamp(22px, 1.9vw, 30px);
-      max-width: 28ch;
-      color: var(--sub);
-      margin-top: 28px;
-      line-height: 1.55;
-      letter-spacing: 0.02em;
-      font-weight: 700;
-      transition: opacity .25s ease, transform .25s ease;
-      will-change: opacity, transform;
-      font-family: var(--font-th);
-      position: relative;
-      z-index: 4;
-      word-break: break-word;
-      overflow-wrap: anywhere;
-      height: 160px;
-      overflow: hidden;
-    }
+.msg {
+  font-size: 30px;
+  max-width: 28ch;
+  color: var(--sub);
+  margin-top: 28px;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  font-family: var(--font-th);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+  word-break: break-word;
+  height: 6.2em;
+}
 
     .qr-header {
       justify-content: flex-start;
@@ -865,17 +865,21 @@
         currentPhotoSrc = fallback;
       }
     });
-    function autoShrinkText(el) {
-      let size = 30;
-      const min = 16;
+function autoShrinkText(el) {
 
-      el.style.fontSize = size + 'px';
+  const textLength = el.textContent.length;
 
-    while (el.scrollHeight > el.clientHeight && size > min) {
-      size--;
-      el.style.fontSize = size + 'px';
-  }
+  let size = 30;
+
+  if (textLength > 140) size = 18;
+  else if (textLength > 110) size = 20;
+  else if (textLength > 80) size = 22;
+  else if (textLength > 50) size = 24;
+  else size = 30;
+
+  el.style.fontSize = size + 'px';
 }
+    
     init();
   </script>
 </body>
