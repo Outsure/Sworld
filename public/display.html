@@ -742,7 +742,8 @@
 
       const nextPhotoSrc = await preloadImage(item.photo || '/default-avatar.png');
 
-      name.textContent = safeText(item.name, 'Guest');
+      const cleanName = safeText(item.name, '').trim();
+      name.textContent = cleanName ? 'Guest : ' + cleanName : 'Guest';
 
       const cleanIg = safeText(item.ig, '').replace(/^@/, '');
       ig.textContent = cleanIg ? 'Follow IG' + cleanIg : '';
