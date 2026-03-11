@@ -302,17 +302,18 @@
         </div>
         <p class="muted desc">Manage guest cards shown on the main screen.</p>
       </div>
-<div class="stats">
-  <div class="pill" id="countPill">0 profiles</div>
-  <div class="pill">Display auto-rotates every 15 seconds</div>
-  <div class="pill">Portal auto-refreshes every 20 seconds</div>
-</div>
+  <div style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
+    <div class="stats">
+      <div class="pill" id="countPill">0 profiles</div>
+      <div class="pill">Display auto-rotates every 15 seconds</div>
+      <div class="pill">Portal auto-refreshes every 20 seconds</div>
+  </div>
+  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+    <button onclick="downloadCSV()">Download CSV</button>
+    <button onclick="downloadPhotosZIP()">Download Photos ZIP</button>
+  </div>
 
-<div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-  <button onclick="downloadCSV()">Download CSV</button>
-  <button onclick="downloadPhotosZIP()">Download Photos ZIP</button>
 </div>
-    </div>
 
     <div id="list"></div>
   </div>
