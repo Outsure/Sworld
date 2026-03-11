@@ -174,7 +174,34 @@ app.get('/api/qrcode', async (_req, res) => {
 app.get('/join.html', (_req, res) => sendPublicFile(res, 'join.html'));
 app.get('/display.html', (_req, res) => sendPublicFile(res, 'display.html'));
 app.get('/admin.html', (_req, res) => sendPublicFile(res, 'admin.html'));
+app.get('/api/export/csv', async (_req, res) => {
+  const data = await readData();
 
+  const headers = ['Guest Name', 'IG', 'Message'];
+
+  const rows = data.map(item => [
+    item.name || '',
+    item.ig || '',
+    item.message || ''
+  ]);
+
+  const escapeCSV = (value) => {
+    const str = String(value ?? '');
+    if (str.includes('"') || str.includes(',') || str.includes('\n')) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  };
+
+  const csv = [
+    headers.join(','),
+    ...rows.map(row => row.map(escapeCSV).join(','))
+  ].join('\n');
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="wedding-messages.csv"');
+  res.send('\ufeff' + csv);
+});
 app.use((err, _req, res, _next) => {
   if (err.code === 'LIMIT_FILE_SIZE') {
     return res.status(400).json({ error: 'รูปมีขนาดใหญ่เกินไป กรุณาเลือกรูปไม่เกิน 15MB' });
