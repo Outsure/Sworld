@@ -284,7 +284,7 @@
     .f8  { left: 90%; animation-delay: 2.8s, 1.2s; }
 
     .page {
-      min-height: calc(100vh - 32px);
+      min-height: auto;
       display: grid;
       place-items: center;
       position: relative;
@@ -613,18 +613,18 @@
       to { transform: rotate(360deg); }
     }
 
-    @media (max-width: 640px) {
-      body {
-        padding:
-          max(12px, env(safe-area-inset-top))
-          12px
-          max(18px, env(safe-area-inset-bottom))
-          12px;
-        background:
-          linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
-          url('/sworld-stage.jpg') center/cover no-repeat;
-      }
-
+@media (max-width: 640px) {
+  body {
+    padding:
+      max(12px, env(safe-area-inset-top))
+      12px
+      12px
+      12px;
+    background:
+      linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
+      url('/sworld-stage.jpg') center/cover no-repeat;
+  }
+}
       .page {
         min-height: auto;
         display: block;
