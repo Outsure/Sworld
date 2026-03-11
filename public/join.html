@@ -58,13 +58,14 @@
       min-height: 100%;
       font-family: var(--font-th), var(--font-en-body), sans-serif;
       color: var(--text);
-      background:
-        linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
-        url('/sworld-stage.jpg') center/cover no-repeat fixed;
+background:
+  linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
+  url('/sworld-stage.jpg') center/cover no-repeat;
+background-attachment: scroll;
       padding:
         max(18px, env(safe-area-inset-top))
         16px
-        max(22px, env(safe-area-inset-bottom))
+        16px
         16px;
       position: relative;
       overflow-x: hidden;
