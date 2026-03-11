@@ -203,6 +203,56 @@ app.get('/api/export/csv', async (_req, res) => {
   res.setHeader('Content-Disposition', 'attachment; filename="wedding-messages.csv"');
   res.send('\ufeff' + csv);
 });
+app.get('/api/export/photos', async (_req, res) => {
+  try {
+    const data = await readData();
+
+    const photoEntries = data.filter(item =>
+      item.photo &&
+      item.photo.startsWith('/uploads/') &&
+      item.photo !== '/default-avatar.png'
+    );
+
+    if (!photoEntries.length) {
+      return res.status(404).json({ error: 'No uploaded photos found.' });
+    }
+
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', 'attachment; filename="wedding-photos.zip"');
+
+    const archive = archiver('zip', { zlib: { level: 9 } });
+
+    archive.on('error', () => {
+      res.status(500).end();
+    });
+
+    archive.pipe(res);
+
+    for (const item of photoEntries) {
+      const filePath = path.join(PUBLIC_DIR, item.photo);
+
+      if (fs.existsSync(filePath)) {
+        const ext = path.extname(filePath) || '.jpg';
+
+        const safeName = String(item.name || 'guest')
+          .replace(/[^\wก-๙-]+/g, '_')
+          .replace(/^_+|_+$/g, '');
+
+        const safeIg = String(item.ig || 'no_ig')
+          .replace(/[^\w.-]+/g, '_');
+
+        const zipName = `${safeName || 'guest'}_${safeIg}${ext}`;
+
+        archive.file(filePath, { name: zipName });
+      }
+    }
+
+    archive.finalize();
+
+  } catch (err) {
+    res.status(500).json({ error: 'ZIP export failed.' });
+  }
+});
 app.use((err, _req, res, _next) => {
   if (err.code === 'LIMIT_FILE_SIZE') {
     return res.status(400).json({ error: 'รูปมีขนาดใหญ่เกินไป กรุณาเลือกรูปไม่เกิน 15MB' });
