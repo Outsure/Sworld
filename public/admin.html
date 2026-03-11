@@ -303,11 +303,15 @@
         <p class="muted desc">Manage guest cards shown on the main screen.</p>
       </div>
 
-      <div class="stats">
-        <div class="pill" id="countPill">0 profiles</div>
-        <div class="pill">Display auto-rotates every 15 seconds</div>
-        <div class="pill">Portal auto-refreshes every 20 seconds</div>
-      </div>
+<div class="stats">
+  <div class="pill" id="countPill">0 profiles</div>
+  <div class="pill">Display auto-rotates every 15 seconds</div>
+  <div class="pill">Portal auto-refreshes every 20 seconds</div>
+</div>
+
+<div style="margin-top:12px">
+  <button onclick="downloadCSV()">Download CSV</button>
+</div>
     </div>
 
     <div id="list"></div>
@@ -357,6 +361,10 @@
 
     load();
     setInterval(load, 20000);
+    
+      function downloadCSV() {
+    window.location.href = '/api/export/csv';
+  }
   </script>
 </body>
 </html>
