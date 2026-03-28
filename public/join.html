@@ -365,30 +365,6 @@
       font-family: var(--font-en-body);
     }
 
-    h1 {
-      font-family: var(--font-en-heading);
-      margin: 0 0 8px;
-      font-size: clamp(26px, 4vw, 34px);
-      line-height: 1.02;
-      font-weight: normal;
-      text-shadow:
-        0 0 12px rgba(255,255,255,0.10),
-        0 0 30px rgba(219,232,255,0.10);
-      animation: titleGlow 5.2s ease-in-out infinite;
-      position: relative;
-      z-index: 4;
-    }
-
-    p {
-      color: var(--sub);
-      margin: 0 0 24px;
-      font-size: 16px;
-      line-height: 1.5;
-      font-family: var(--font-en-body);
-      position: relative;
-      z-index: 4;
-    }
-
     .grid {
       display: grid;
       gap: 14px;
@@ -469,36 +445,39 @@
 
     .preview-box {
       display: none;
+      align-items: center;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 8px;
       position: relative;
       z-index: 4;
     }
 
     .preview-box.show {
-      display: grid;
+      display: flex;
     }
 
     .preview-frame {
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      border-radius: 18px;
+      width: 54px;
+      height: 54px;
+      border-radius: 12px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.22);
       background: rgba(255,255,255,0.05);
       display: grid;
       place-items: center;
       position: relative;
+      flex-shrink: 0;
     }
 
     .preview-frame.loading::after {
-      content: 'Preparing preview...';
+      content: "";
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.28);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
       position: absolute;
-      inset: auto 0 10px 0;
-      text-align: center;
-      font-size: 12px;
-      color: rgba(255,255,255,0.86);
-      font-family: var(--font-en-body);
     }
 
     .preview-image {
@@ -509,32 +488,26 @@
       background: transparent;
     }
 
-    .preview-meta {
-      font-size: 12px;
-      color: var(--sub);
-      line-height: 1.5;
-      font-family: var(--font-en-body);
-    }
-
     .preview-actions {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
     }
 
     .ghost-btn {
       border: 1px solid rgba(255,255,255,0.24);
       background: rgba(255,255,255,0.08);
       color: #fff;
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 13px;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       min-height: auto;
       width: auto;
       margin-top: 0;
       box-shadow: none;
+      font-family: var(--font-en-body);
     }
 
     button {
@@ -602,16 +575,6 @@
       color: var(--danger-text);
     }
 
-    .note {
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--sub);
-      line-height: 1.5;
-      font-family: var(--font-en-body);
-      position: relative;
-      z-index: 4;
-    }
-
     .burst {
       position: fixed;
       inset: 0;
@@ -677,11 +640,6 @@
       50% { transform: translateY(-4px); }
     }
 
-    @keyframes titleGlow {
-      0%, 100% { opacity: 0.96; }
-      50% { opacity: 1; }
-    }
-
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -712,10 +670,6 @@
       .brand img {
         width: 82px;
         height: 82px;
-      }
-
-      h1 {
-        font-size: clamp(30px, 9vw, 40px);
       }
 
       input,
@@ -785,9 +739,8 @@
           <div id="previewFrame" class="preview-frame">
             <img id="previewImage" class="preview-image" alt="Selected preview" />
           </div>
-          <div id="previewMeta" class="preview-meta"></div>
           <div class="preview-actions">
-            <button type="button" id="removePhotoBtn" class="ghost-btn">Remove photo</button>
+            <button type="button" id="removePhotoBtn" class="ghost-btn">Remove</button>
           </div>
         </div>
 
@@ -833,7 +786,6 @@
     const previewBox = document.getElementById('previewBox');
     const previewFrame = document.getElementById('previewFrame');
     const previewImage = document.getElementById('previewImage');
-    const previewMeta = document.getElementById('previewMeta');
     const removePhotoBtn = document.getElementById('removePhotoBtn');
 
     let isSubmitting = false;
@@ -874,13 +826,6 @@
       return { name, ig, message };
     }
 
-    function formatBytes(bytes) {
-      if (!bytes && bytes !== 0) return '-';
-      if (bytes < 1024) return bytes + ' B';
-      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
-    }
-
     function resetPreview() {
       if (previewObjectUrl) {
         URL.revokeObjectURL(previewObjectUrl);
@@ -889,7 +834,6 @@
 
       processedPhotoFile = null;
       previewImage.removeAttribute('src');
-      previewMeta.textContent = '';
       previewBox.classList.remove('show');
       previewFrame.classList.remove('loading');
     }
@@ -984,7 +928,6 @@
 
       previewBox.classList.add('show');
       previewFrame.classList.add('loading');
-      previewMeta.textContent = `Original file: ${formatBytes(file.size)}`;
 
       try {
         const compressed = await compressImage(file);
@@ -1006,10 +949,6 @@
           clearSelectedPhoto();
           showError('Preview could not be displayed');
         };
-
-        previewMeta.innerHTML =
-          `Original file: ${formatBytes(file.size)}<br>` +
-          `Prepared upload: ${formatBytes(compressed.size)}`;
       } catch (error) {
         previewFrame.classList.remove('loading');
         clearSelectedPhoto();
