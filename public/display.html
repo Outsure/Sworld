@@ -28,9 +28,11 @@
       --star-gold: #ffe7a8;
       --star-gold-soft: #ffd36e;
     }
-.th {
-  font-family: var(--font-th);
-}
+
+    .th {
+      font-family: var(--font-th);
+    }
+
     @font-face {
       font-family: 'Feeling Passionate';
       src: url('/fonts/feeling-passionate.woff2') format('woff2'),
@@ -49,14 +51,14 @@
       height: 100%;
     }
 
-      body {
+    body {
       margin: 0;
       min-height: 100vh;
       font-family: var(--font-en-body), var(--font-th), sans-serif;
       color: var(--text);
       background:
-      linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)),
-      url('/sworld-stage.jpg') center/cover no-repeat fixed;
+        linear-gradient(rgba(0,44,103,0.22), rgba(0,44,103,0.32)),
+        url('/sworld-stage.jpg') center/cover no-repeat fixed;
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -135,7 +137,7 @@
       position: relative;
       z-index: 3;
       display: grid;
-      grid-template-columns: 1fr 1.35fr 1fr;
+      grid-template-columns: 0.9fr 1.28fr 1.12fr;
       height: 100vh;
       gap: 22px;
       padding: 24px;
@@ -172,6 +174,7 @@
       background: rgba(255,255,255,0.025);
       border: 1px solid rgba(255,255,255,0.05);
       width: fit-content;
+      max-width: 100%;
       padding: 10px 14px;
       border-radius: 16px;
       position: relative;
@@ -196,9 +199,9 @@
 
     .title-en {
       font-family: var(--font-en-heading);
-      font-size: 42px;
-      line-height: 1.05;
-      margin: 8px 0 6px;
+      font-size: clamp(46px, 3vw, 78px);
+      line-height: 1.02;
+      margin: 8px 0 0;
       font-weight: normal;
       letter-spacing: 0.01em;
       position: relative;
@@ -229,43 +232,50 @@
       z-index: 4;
     }
 
-.msg {
-  font-family: var(--font-th), var(--font-en-body), sans-serif;
-  font-size: 30px;
-  max-width: 28ch;
-  color: var(--sub);
-  margin-top: 28px;
-  line-height: 1.55;
-  letter-spacing: 0.02em;
-  font-weight: 700;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+    .msg {
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
+      font-size: 30px;
+      max-width: 28ch;
+      color: var(--sub);
+      margin-top: 28px;
+      line-height: 1.55;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word;
+      height: 6.2em;
+    }
 
-  overflow: hidden;
-  word-break: break-word;
-  height: 6.2em;
-}
+    .qr-panel {
+      display: flex;
+      flex-direction: column;
+    }
 
     .qr-header {
       justify-content: flex-start;
       font-size: 22px;
       width: 100%;
     }
+
     .qr-header span {
       line-height: 1.2;
     }
+
     .photo-wrap {
       height: 100%;
       display: grid;
       place-items: center;
       position: relative;
+      padding: 12px;
     }
 
     .photo {
-      width: min(68vh, 100%);
+      width: min(62vh, 100%);
       max-width: 100%;
-      max-height: calc(100vh - 96px);
+      max-height: calc(100vh - 110px);
       aspect-ratio: 3 / 4;
       object-fit: contain;
       border-radius: 36px;
@@ -278,33 +288,40 @@
       z-index: 4;
     }
 
-      .qr-box {
-        display: grid;
-        gap: 18px;
-        justify-items: center;
-        text-align: center;
-        align-content: center;
-        margin-top: 0;
-        position: relative;
-        z-index: 4;
-        min-height: calc(100% - 120px);
+    .qr-box {
+      flex: 1;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+      justify-items: center;
+      align-items: center;
+      align-content: center;
+      text-align: center;
+      margin-top: 8px;
+      position: relative;
+      z-index: 4;
+      min-height: 0;
     }
 
     .qr {
-      width: 200px;
-      height: 200px;
+      width: min(34vw, 52vh, 100%);
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
       background: #fff;
-      padding: 12px;
-      border-radius: 20px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+      padding: 18px;
+      border-radius: 28px;
+      box-shadow: 0 22px 55px rgba(0,0,0,0.30);
       object-fit: contain;
     }
 
     .small {
-      font-size: 14px;
+      font-size: 12px;
       color: var(--sub);
       word-break: break-all;
       font-family: var(--font-en-body);
+      max-width: 92%;
+      opacity: 0.9;
     }
 
     .counter {
@@ -591,6 +608,20 @@
       }
     }
 
+    @media (max-width: 1600px) {
+      .layout {
+        grid-template-columns: 0.95fr 1.2fr 1.05fr;
+      }
+
+      .qr {
+        width: min(30vw, 46vh, 100%);
+      }
+
+      .photo {
+        width: min(58vh, 100%);
+      }
+    }
+
     @media (max-width: 1280px) {
       .layout {
         grid-template-columns: 1fr 1.1fr 1fr;
@@ -648,15 +679,14 @@
       <img class="photo" id="photo" src="/default-avatar.png" alt="Guest photo" />
     </section>
 
-    <section class="panel">
-<div class="header-note qr-header">
-  <img src="/sworld-logo.png" alt="Sworld logo" />
-<span class="th">
-อวยพรให้วีกับตั๋ง<br>
-หรือ แจกวาร์ป!
-</span>
-
-</div>
+    <section class="panel qr-panel">
+      <div class="header-note qr-header">
+        <img src="/sworld-logo.png" alt="Sworld logo" />
+        <span class="th">
+          อวยพรให้วีกับตั๋ง<br>
+          หรือ แจกวาร์ป!
+        </span>
+      </div>
 
       <div class="qr-box">
         <div>
@@ -763,7 +793,9 @@
         item.message,
         'Happy to celebrate with the couple tonight ✨'
       );
-         autoShrinkText(message);
+
+      autoShrinkText(message);
+
       if (currentPhotoSrc !== nextPhotoSrc) {
         photo.src = nextPhotoSrc;
         currentPhotoSrc = nextPhotoSrc;
@@ -872,21 +904,20 @@
         currentPhotoSrc = fallback;
       }
     });
-function autoShrinkText(el) {
 
-  const textLength = el.textContent.length;
+    function autoShrinkText(el) {
+      const textLength = el.textContent.length;
+      let size = 30;
 
-  let size = 30;
+      if (textLength > 140) size = 18;
+      else if (textLength > 110) size = 20;
+      else if (textLength > 80) size = 22;
+      else if (textLength > 50) size = 24;
+      else size = 30;
 
-  if (textLength > 140) size = 18;
-  else if (textLength > 110) size = 20;
-  else if (textLength > 80) size = 22;
-  else if (textLength > 50) size = 24;
-  else size = 30;
+      el.style.fontSize = size + 'px';
+    }
 
-  el.style.fontSize = size + 'px';
-}
-    
     init();
   </script>
 </body>
