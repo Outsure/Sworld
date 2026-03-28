@@ -407,8 +407,8 @@
     textarea:focus {
       border-color: var(--star-gold);
       box-shadow:
-        0 0 0 2px rgba(255,231,168,0.35),
-        0 0 12px rgba(255,231,168,0.35);
+       0 0 0 2px rgba(255,231,168,0.35),
+      0 0 12px rgba(255,231,168,0.35);
     }
 
     textarea {
@@ -416,97 +416,106 @@
       resize: vertical;
     }
 
-    .simple-upload input[type="file"] {
-      padding: 12px;
-      cursor: pointer;
-    }
-
-    .simple-upload input[type="file"]::-webkit-file-upload-button {
-      border: 0;
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin-right: 12px;
-      font-weight: 700;
-      background: #ffffff;
-      color: #002c67;
-      cursor: pointer;
-    }
-
-    .simple-upload input[type="file"]::file-selector-button {
-      border: 0;
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin-right: 12px;
-      font-weight: 700;
-      background: #ffffff;
-      color: #002c67;
-      cursor: pointer;
-    }
-
-    .preview-box {
-      display: none;
-      align-items: center;
-      gap: 10px;
+    .upload-shell {
+      position: relative;
       margin-top: 8px;
-      position: relative;
-      z-index: 4;
     }
 
-    .preview-box.show {
-      display: flex;
+    .photo-input-hidden {
+      display: none;
     }
 
-    .preview-frame {
-      width: 54px;
-      height: 54px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.22);
+    .upload-bar {
+      min-height: 74px;
+      width: 100%;
+      border: 1.5px solid var(--line);
       background: rgba(255,255,255,0.05);
-      display: grid;
-      place-items: center;
+      border-radius: 18px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       position: relative;
-      flex-shrink: 0;
+      z-index: 1;
     }
 
-    .preview-frame.loading::after {
+    .upload-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      padding: 0 18px;
+      border-radius: 14px;
+      background: #ffffff;
+      color: #002c67;
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-family: var(--font-th), var(--font-en-body), sans-serif;
+      cursor: pointer;
+      border: 0;
+    }
+
+    .inline-preview {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      display: none;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .inline-preview.show {
+      display: block;
+    }
+
+    .inline-preview.loading::after {
       content: "";
+      position: absolute;
+      inset: 50% auto auto 50%;
       width: 16px;
       height: 16px;
+      margin-left: -8px;
+      margin-top: -8px;
       border: 2px solid rgba(255,255,255,0.28);
       border-top-color: #ffffff;
       border-radius: 50%;
       animation: spin .8s linear infinite;
-      position: absolute;
     }
 
-    .preview-image {
+    .inline-preview-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      background: transparent;
     }
 
-    .preview-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .ghost-btn {
+    .inline-remove {
       border: 1px solid rgba(255,255,255,0.24);
       background: rgba(255,255,255,0.08);
       color: #fff;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 12px;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       min-height: auto;
       width: auto;
       margin-top: 0;
       box-shadow: none;
+      flex-shrink: 0;
       font-family: var(--font-en-body);
     }
 
@@ -689,6 +698,25 @@
 
       .sparkle.big::before { font-size: 24px; }
       .sparkle.small::before { font-size: 14px; }
+
+      .upload-bar {
+        padding: 10px 12px;
+      }
+
+      .upload-btn {
+        height: 44px;
+        padding: 0 16px;
+      }
+
+      .inline-preview {
+        width: 44px;
+        height: 44px;
+      }
+
+      .inline-remove {
+        padding: 9px 12px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -730,17 +758,24 @@
           <textarea id="message" name="message" placeholder="เขียนคำอวยพร หรือข้อความสั้นๆ ได้ตามสบาย" maxlength="250"></textarea>
         </label>
 
-        <label class="simple-upload">
-          Upload photo
-          <input id="photoInput" type="file" name="photo" accept="image/*" />
-        </label>
+        <div>
+          <label for="photoInput">Upload photo</label>
+          <div class="upload-shell">
+            <input id="photoInput" class="photo-input-hidden" type="file" name="photo" accept="image/*" />
 
-        <div id="previewBox" class="preview-box" aria-live="polite">
-          <div id="previewFrame" class="preview-frame">
-            <img id="previewImage" class="preview-image" alt="Selected preview" />
-          </div>
-          <div class="preview-actions">
-            <button type="button" id="removePhotoBtn" class="ghost-btn">Remove</button>
+            <div class="upload-bar">
+              <div class="upload-left">
+                <button type="button" id="choosePhotoBtn" class="upload-btn">เลือกไฟล์</button>
+
+                <div id="inlinePreview" class="inline-preview" aria-hidden="true">
+                  <img id="previewImage" class="inline-preview-image" alt="Selected preview" />
+                </div>
+              </div>
+
+              <button type="button" id="removePhotoBtn" class="inline-remove" style="display:none;">
+                Remove
+              </button>
+            </div>
           </div>
         </div>
 
@@ -782,9 +817,10 @@
     const nameInput = document.getElementById('nameInput');
     const igInput = document.getElementById('igInput');
     const messageInput = document.getElementById('message');
+
     const photoInput = document.getElementById('photoInput');
-    const previewBox = document.getElementById('previewBox');
-    const previewFrame = document.getElementById('previewFrame');
+    const choosePhotoBtn = document.getElementById('choosePhotoBtn');
+    const inlinePreview = document.getElementById('inlinePreview');
     const previewImage = document.getElementById('previewImage');
     const removePhotoBtn = document.getElementById('removePhotoBtn');
 
@@ -834,8 +870,8 @@
 
       processedPhotoFile = null;
       previewImage.removeAttribute('src');
-      previewBox.classList.remove('show');
-      previewFrame.classList.remove('loading');
+      inlinePreview.classList.remove('show', 'loading');
+      removePhotoBtn.style.display = 'none';
     }
 
     function clearSelectedPhoto() {
@@ -926,8 +962,8 @@
         return;
       }
 
-      previewBox.classList.add('show');
-      previewFrame.classList.add('loading');
+      inlinePreview.classList.add('show', 'loading');
+      removePhotoBtn.style.display = 'none';
 
       try {
         const compressed = await compressImage(file);
@@ -941,16 +977,15 @@
         previewImage.src = previewObjectUrl;
 
         previewImage.onload = () => {
-          previewFrame.classList.remove('loading');
+          inlinePreview.classList.remove('loading');
+          removePhotoBtn.style.display = 'inline-flex';
         };
 
         previewImage.onerror = () => {
-          previewFrame.classList.remove('loading');
           clearSelectedPhoto();
           showError('Preview could not be displayed');
         };
       } catch (error) {
-        previewFrame.classList.remove('loading');
         clearSelectedPhoto();
         showError(error.message || 'Image could not be prepared');
       }
@@ -979,8 +1014,17 @@
       setTimeout(() => burst.remove(), 900);
     }
 
+    choosePhotoBtn.addEventListener('click', () => {
+      photoInput.click();
+    });
+
     photoInput.addEventListener('change', handlePhotoChange);
-    removePhotoBtn.addEventListener('click', clearSelectedPhoto);
+
+    removePhotoBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      clearSelectedPhoto();
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
