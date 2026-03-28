@@ -58,10 +58,10 @@
       min-height: 100%;
       font-family: var(--font-th), var(--font-en-body), sans-serif;
       color: var(--text);
-background:
-  linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
-  url('/sworld-stage.jpg') center/cover no-repeat;
-background-attachment: scroll;
+      background:
+        linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
+        url('/sworld-stage.jpg') center/cover no-repeat;
+      background-attachment: scroll;
       padding:
         max(18px, env(safe-area-inset-top))
         16px
@@ -431,8 +431,8 @@ background-attachment: scroll;
     textarea:focus {
       border-color: var(--star-gold);
       box-shadow:
-       0 0 0 2px rgba(255,231,168,0.35),
-      0 0 12px rgba(255,231,168,0.35);
+        0 0 0 2px rgba(255,231,168,0.35),
+        0 0 12px rgba(255,231,168,0.35);
     }
 
     textarea {
@@ -465,6 +465,76 @@ background-attachment: scroll;
       background: #ffffff;
       color: #002c67;
       cursor: pointer;
+    }
+
+    .preview-box {
+      display: none;
+      gap: 10px;
+      margin-top: 10px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .preview-box.show {
+      display: grid;
+    }
+
+    .preview-frame {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.05);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .preview-frame.loading::after {
+      content: 'Preparing preview...';
+      position: absolute;
+      inset: auto 0 10px 0;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.86);
+      font-family: var(--font-en-body);
+    }
+
+    .preview-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: transparent;
+    }
+
+    .preview-meta {
+      font-size: 12px;
+      color: var(--sub);
+      line-height: 1.5;
+      font-family: var(--font-en-body);
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ghost-btn {
+      border: 1px solid rgba(255,255,255,0.24);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: auto;
+      width: auto;
+      margin-top: 0;
+      box-shadow: none;
     }
 
     button {
@@ -616,18 +686,18 @@ background-attachment: scroll;
       to { transform: rotate(360deg); }
     }
 
-@media (max-width: 640px) {
-  body {
-    padding:
-      max(12px, env(safe-area-inset-top))
-      12px
-      12px
-      12px;
-    background:
-      linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
-      url('/sworld-stage.jpg') center/cover no-repeat;
-  }
-}
+    @media (max-width: 640px) {
+      body {
+        padding:
+          max(12px, env(safe-area-inset-top))
+          12px
+          12px
+          12px;
+        background:
+          linear-gradient(rgba(0,44,103,0.28), rgba(0,44,103,0.38)),
+          url('/sworld-stage.jpg') center/cover no-repeat;
+      }
+
       .page {
         min-height: auto;
         display: block;
@@ -711,6 +781,16 @@ background-attachment: scroll;
           <input id="photoInput" type="file" name="photo" accept="image/*" />
         </label>
 
+        <div id="previewBox" class="preview-box" aria-live="polite">
+          <div id="previewFrame" class="preview-frame">
+            <img id="previewImage" class="preview-image" alt="Selected preview" />
+          </div>
+          <div id="previewMeta" class="preview-meta"></div>
+          <div class="preview-actions">
+            <button type="button" id="removePhotoBtn" class="ghost-btn">Remove photo</button>
+          </div>
+        </div>
+
         <button type="submit" id="submitBtn">
           <span id="submitText">Join to Sworld</span>
           <span id="submitLoader" class="loader"></span>
@@ -749,8 +829,16 @@ background-attachment: scroll;
     const nameInput = document.getElementById('nameInput');
     const igInput = document.getElementById('igInput');
     const messageInput = document.getElementById('message');
+    const photoInput = document.getElementById('photoInput');
+    const previewBox = document.getElementById('previewBox');
+    const previewFrame = document.getElementById('previewFrame');
+    const previewImage = document.getElementById('previewImage');
+    const previewMeta = document.getElementById('previewMeta');
+    const removePhotoBtn = document.getElementById('removePhotoBtn');
 
     let isSubmitting = false;
+    let processedPhotoFile = null;
+    let previewObjectUrl = '';
 
     function showError(message) {
       okBox.style.display = 'none';
@@ -786,6 +874,149 @@ background-attachment: scroll;
       return { name, ig, message };
     }
 
+    function formatBytes(bytes) {
+      if (!bytes && bytes !== 0) return '-';
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    function resetPreview() {
+      if (previewObjectUrl) {
+        URL.revokeObjectURL(previewObjectUrl);
+        previewObjectUrl = '';
+      }
+
+      processedPhotoFile = null;
+      previewImage.removeAttribute('src');
+      previewMeta.textContent = '';
+      previewBox.classList.remove('show');
+      previewFrame.classList.remove('loading');
+    }
+
+    function clearSelectedPhoto() {
+      photoInput.value = '';
+      resetPreview();
+    }
+
+    async function loadImageFromFile(file) {
+      return new Promise((resolve, reject) => {
+        const objectUrl = URL.createObjectURL(file);
+        const img = new Image();
+
+        img.onload = () => {
+          URL.revokeObjectURL(objectUrl);
+          resolve(img);
+        };
+
+        img.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          reject(new Error('This image could not be loaded'));
+        };
+
+        img.src = objectUrl;
+      });
+    }
+
+    function canvasToJpegBlob(canvas, quality) {
+      return new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error('Image compression failed'));
+            return;
+          }
+          resolve(blob);
+        }, 'image/jpeg', quality);
+      });
+    }
+
+    async function compressImage(file) {
+      const img = await loadImageFromFile(file);
+
+      const maxWidth = 1600;
+      const maxHeight = 2000;
+
+      let width = img.naturalWidth || img.width;
+      let height = img.naturalHeight || img.height;
+
+      const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
+      const targetWidth = Math.max(1, Math.round(width * ratio));
+      const targetHeight = Math.max(1, Math.round(height * ratio));
+
+      const canvas = document.createElement('canvas');
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+
+      const ctx = canvas.getContext('2d', { alpha: false });
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, targetWidth, targetHeight);
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+      let quality = 0.86;
+      let blob = await canvasToJpegBlob(canvas, quality);
+
+      while (blob.size > 1.25 * 1024 * 1024 && quality > 0.55) {
+        quality -= 0.08;
+        blob = await canvasToJpegBlob(canvas, quality);
+      }
+
+      const originalBaseName = (file.name || 'photo').replace(/\.[^/.]+$/, '');
+      return new File([blob], `${originalBaseName}.jpg`, {
+        type: 'image/jpeg',
+        lastModified: Date.now()
+      });
+    }
+
+    async function handlePhotoChange() {
+      hideMessages();
+
+      const file = photoInput.files && photoInput.files[0];
+      if (!file) {
+        resetPreview();
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        clearSelectedPhoto();
+        showError('Please choose an image file only');
+        return;
+      }
+
+      previewBox.classList.add('show');
+      previewFrame.classList.add('loading');
+      previewMeta.textContent = `Original file: ${formatBytes(file.size)}`;
+
+      try {
+        const compressed = await compressImage(file);
+        processedPhotoFile = compressed;
+
+        if (previewObjectUrl) {
+          URL.revokeObjectURL(previewObjectUrl);
+        }
+
+        previewObjectUrl = URL.createObjectURL(compressed);
+        previewImage.src = previewObjectUrl;
+
+        previewImage.onload = () => {
+          previewFrame.classList.remove('loading');
+        };
+
+        previewImage.onerror = () => {
+          previewFrame.classList.remove('loading');
+          clearSelectedPhoto();
+          showError('Preview could not be displayed');
+        };
+
+        previewMeta.innerHTML =
+          `Original file: ${formatBytes(file.size)}<br>` +
+          `Prepared upload: ${formatBytes(compressed.size)}`;
+      } catch (error) {
+        previewFrame.classList.remove('loading');
+        clearSelectedPhoto();
+        showError(error.message || 'Image could not be prepared');
+      }
+    }
+
     function sparkleBurst(x, y) {
       const burst = document.createElement('div');
       burst.className = 'burst';
@@ -809,6 +1040,9 @@ background-attachment: scroll;
       setTimeout(() => burst.remove(), 900);
     }
 
+    photoInput.addEventListener('change', handlePhotoChange);
+    removePhotoBtn.addEventListener('click', clearSelectedPhoto);
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       hideMessages();
@@ -828,6 +1062,12 @@ background-attachment: scroll;
         const formData = new FormData(form);
         formData.set('ig', normalizeIgValue(igInput.value));
 
+        if (processedPhotoFile) {
+          formData.set('photo', processedPhotoFile, processedPhotoFile.name);
+        } else {
+          formData.delete('photo');
+        }
+
         const response = await fetch('/api/entries', {
           method: 'POST',
           body: formData
@@ -845,6 +1085,7 @@ background-attachment: scroll;
         okBox.style.display = 'block';
         sparkleBurst(window.innerWidth / 2, window.innerHeight / 2);
         form.reset();
+        resetPreview();
       } catch (error) {
         showError(error.message || 'Submit failed');
       } finally {
